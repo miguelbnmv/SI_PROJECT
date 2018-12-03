@@ -27,6 +27,9 @@
         <input type="radio" name="radio">
         <span class="checkmark"></span>
     </label>
+    <div class="logout w-color">
+        <a class="w-color" href="logout.php">Logout</a>
+    </div>
 </div>
 <section class="main">
     <div class="main_header">
@@ -73,9 +76,7 @@
         ?>
     </div>
     </div>
-    <div class="logout b-color">
-        <a class="b-color" href="logout.php">logout</a>
-    </div>
+
 
 </section>
 </body>
