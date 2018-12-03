@@ -54,10 +54,12 @@ if(isset($_POST["firstname"]) || isset($_POST["lastname"]) || isset($_POST["emai
     $USERPASS = clean($_POST["password"]);
     $USERCPASS = clean($_POST["confirm_password"]);
     $findResult = pg_query( "SELECT * FROM cliente WHERE cliente_email ='$USEREMAIL'");
+    $findResult2 = pg_fetch_result($findResult, 0, 0);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($USERPASS == $USERCPASS) {
             $USERCRIPTPASS = password_hash($USERPASS, PASSWORD_DEFAULT);
-            if ($findResult != 0) {
+            echo ($findResult2);
+            if ($findResult2 != 0) {
                 echo "<script type='text/javascript'>alert('Email Already Exists');</script>";
             } else {
                 $rowResource = pg_query($connection, "SELECT count(*) AS exact_count FROM cliente");
