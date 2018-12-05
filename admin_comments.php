@@ -49,64 +49,39 @@
             </form>
         </div>
         <div class="main_comments">
-            <div class="comment">
-                <div class="info">
-                    <h3>Francisco Freitas</h3>
-                    <p class="comment_date">11:30</p>
-                </div>
-                <div class="content">
-                    Lorem ipsum dolor sit amet, nec tibique argumentum cu, at mei nulla soleat omnesque, his et simul quando iisque.
-                    Est fugit tempor prodesset in, ad sumo noluisse moderatius duo.
-                </div>
-                <div class="delete">
-                    <form method="POST" id="formCreateComment" >
-                        <input type="image" src="assets/images/waste-bin.png" alt="Submit Form" />
-                    </form>
-                </div>
-            </div>
-            <div class="comment">
-                <div class="info">
-                    <h3>Francisco Freitas</h3>
-                    <p class="comment_date">11:30</p>
-                </div>
-                <div class="content">
-                    Lorem ipsum dolor sit amet, nec tibique argumentum cu, at mei nulla soleat omnesque, his et simul quando iisque.
-                    Est fugit tempor prodesset in, ad sumo noluisse moderatius duo.
-                </div>
-                <div class="delete">
-                    <form method="POST" id="formCreateComment" >
-                        <input type="image" src="assets/images/waste-bin.png" name="delete_comment" alt="Delete Comment" />
-                    </form>
-                </div>
-            </div>
-           <!-- --><?php
-/*            include 'server-connection.php';
-            $rowResource = pg_query($connection, "SELECT * FROM comments WHERE book_id ='$BOOKID'");
-            $rowCount = pg_fetch_result($rowResource, 0, 0);
+           <?php
+           include 'server-connection.php';
+            $rowResource = pg_query($connection, "SELECT * FROM comentarios WHERE livro_id ='1'");
+            $rowCount = pg_num_rows($rowResource);
 
             for ($i = 0; $i < $rowCount; $i++) {
-                $COMMENT = pg_query($connection, "SELECT comment FROM comments");
+                $COMMENT = pg_query($connection, "SELECT comment_content FROM comentarios");
                 $ALLCOMMENTS[$i]= pg_fetch_result($COMMENT,$i,0);
-                $CLIENTNAME = pg_query($connection, "SELECT client_id FROM comments");
+                $CLIENTID = pg_query($connection, "SELECT cliente_id FROM comentarios");
+                $ALLCLIENTIDS[$i]= pg_fetch_result($CLIENTID,$i,0);
+                echo($ALLCLIENTIDS[$i]);
+                $CLIENTNAME = pg_query($connection, "SELECT cliente_firstname FROM cliente WHERE cliente_id ='$ALLCLIENTIDS[$i]'");
                 $ALLCLIENTNAMES[$i]= pg_fetch_result($CLIENTNAME,$i,0);
-                $DATE = pg_query($connection, "SELECT date_comment FROM comments");
+                $DATE = pg_query($connection, "select cast(date_trunc('seconds',comment_date) as time) FROM comentarios");
                 $ALLDATES[$i]= pg_fetch_result($DATE,$i,0);
             }
             for ($i = 0; $i < $rowCount; $i++) {
-                echo (" <div class=\"book\">
-                        <div>
-                            <p class=\"book_title\">$ALLCLIENTNAMES[$i]</p>
-                            <p class=\"book_price\"> $ALLDATES[$i]$</p>
-                        </div>
-                        <div>
-                            <p class=\"book_id\"> $ALLCOMMENTS[$i]</p>
-                        </div>
-                    </div>");
-
-
-
+                echo ("<div class=\"comment\">
+                <div class=\"info\">
+                    <h3>$ALLCLIENTNAMES[$i]</h3>
+                    <p class=\"comment_date\">$ALLDATES[$i]</p>
+                </div>
+                <div class=\"content\">
+                    $ALLCOMMENTS[$i]
+                </div>
+                <div class=\"delete\">
+                    <form method=\"POST\" id=\"formCreateComment\" >
+                        <input type=\"image\" src=\"assets/images/waste-bin.png\" name=\"delete_comment\" alt=\"Delete_Comment\" />
+                    </form>
+                </div>
+            </div>");
             }
-            */?>
+            ?>
         </div>
     </div>
 
@@ -114,3 +89,21 @@
 </section>
 </body>
 </html>
+<?php
+if(isset($_POST['submit_comment']))
+{
+    $COMMENT = $_POST["comment"];
+
+    $rowResource = pg_query($connection, "SELECT count(*) AS exact_count FROM livro");
+    $rowCount = pg_fetch_result($rowResource, 0, 0);
+
+    $query = "INSERT INTO livro VALUES ($rowCount+1,'2','$BOOKAUTHOR','$BOOKPRICE','$BOOKDESCRIPTION','$BOOKPUBLISHER','$BOOKDATE')";
+    $result = pg_query($query);
+
+    header("Location: http://localhost:63342/SI_PROJECT/catalog.php");
+    echo("1");
+} else if(isset($_POST['delete_comment']))
+{
+    echo("2");
+}
+?>
