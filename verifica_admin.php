@@ -6,10 +6,10 @@
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/verifica_admin.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/form.css" type="text/css">
+    <link rel="stylesheet" href="flexboxgrid.min.css" type="text/css">
+    <link rel="stylesheet" href="verifica_admin.css" type="text/css">
+    <link rel="stylesheet" href="utilities.css" type="text/css">
+    <link rel="stylesheet" href="form.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -68,7 +68,7 @@ if(isset($_POST["email"]) || isset($_POST["password"])) {
         session_start();
         $_SESSION["logged"] = $ADMINEMAIL;
         echo("{$_SESSION["logged"]}");
-        header("Location: http://localhost:63342/SI_PROJECT/catalog.php");
+        header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
     } else {
         echo("erro");
     }

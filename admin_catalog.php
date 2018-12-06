@@ -43,6 +43,9 @@
         <div>
             <input type="search" placeholder="Search something...">
         </div>
+        <a class="plus" href="addBook.php">
+            <img class="plus-image"  src="assets/images/plus.png" alt="plus btn">
+        </a>
         <div class="main_books">
         <?php
         include 'server-connection.php';
@@ -69,15 +72,33 @@
                             <p class=\"book_id\"> $ALLIDS[$i]</p>
                         </div>
                     </div>");
-
-
-
         }
         ?>
     </div>
     </div>
-
-
 </section>
 </body>
 </html>
+
+
+<?php
+include 'server-connection.php';
+$rowResource = pg_query($connection, "SELECT * FROM livro");
+$rowCount =  pg_num_rows($rowResource);
+
+for ($i = 0; $i < $rowCount; $i++) {
+    $BOOKNAME = pg_query($connection, "SELECT book_name FROM livro");
+    $BOOKNAME2= pg_fetch_result($BOOKNAME,$i,0);
+    echo $BOOKNAME2;
+    $BOOKID = pg_query($connection, "SELECT book_id FROM livro");
+    $BOOKID2= pg_fetch_result($BOOKID,$i,0);
+    echo $BOOKID2;
+    echo "
+            <div class=\"row\">
+            <div class=\"col-xs-6\">
+    <a href='SeeBook.php?id=" . $BOOKID2 . "'> See Book </a>
+                </div>        </div>
+    "
+    ;
+}
+?>

@@ -90,3 +90,11 @@ input[type="search"]:hover, input[type="search"]:focus {
     border: 1px solid var(--color-black);
 }
 
+.plus{
+
+}
+.plus-image{
+    width: 35px;
+    height: 35px;
+}
+

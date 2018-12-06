@@ -51,28 +51,17 @@
         <div class="main_comments">
            <?php
            include 'server-connection.php';
-            $rowResource = pg_query($connection, "SELECT * FROM comentarios WHERE livro_id ='1'");
-            $rowCount = pg_num_rows($rowResource);
-
-            for ($i = 0; $i < $rowCount; $i++) {
-                $COMMENT = pg_query($connection, "SELECT comment_content FROM comentarios");
-                $ALLCOMMENTS[$i]= pg_fetch_result($COMMENT,$i,0);
-                $CLIENTID = pg_query($connection, "SELECT cliente_id FROM comentarios");
-                $ALLCLIENTIDS[$i]= pg_fetch_result($CLIENTID,$i,0);
-                echo($ALLCLIENTIDS[$i]);
-                $CLIENTNAME = pg_query($connection, "SELECT cliente_firstname FROM cliente WHERE cliente_id ='$ALLCLIENTIDS[$i]'");
-                $ALLCLIENTNAMES[$i]= pg_fetch_result($CLIENTNAME,$i,0);
-                $DATE = pg_query($connection, "select cast(date_trunc('seconds',comment_date) as time) FROM comentarios");
-                $ALLDATES[$i]= pg_fetch_result($DATE,$i,0);
-            }
-            for ($i = 0; $i < $rowCount; $i++) {
-                echo ("<div class=\"comment\">
+           $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id");
+           $result = pg_fetch_all($result);
+           foreach ($result as $linha)
+           {
+               echo ("<div class=\"comment\">
                 <div class=\"info\">
-                    <h3>$ALLCLIENTNAMES[$i]</h3>
-                    <p class=\"comment_date\">$ALLDATES[$i]</p>
+                    <h3>{$linha['cliente_firstname']}</h3>
+                    <p class=\"comment_date\">{$linha['comment_date']}</p>
                 </div>
                 <div class=\"content\">
-                    $ALLCOMMENTS[$i]
+                    {$linha['comment_content']}
                 </div>
                 <div class=\"delete\">
                     <form method=\"POST\" id=\"formCreateComment\" >
@@ -80,12 +69,10 @@
                     </form>
                 </div>
             </div>");
-            }
+           }
             ?>
         </div>
     </div>
-
-
 </section>
 </body>
 </html>

@@ -6,10 +6,10 @@
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/catalog.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/sidebar.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="utilities.css" type="text/css">
+    <link rel="stylesheet" href="catalog.css" type="text/css">
+    <link rel="stylesheet" href="sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -85,19 +85,7 @@ for ($i = 0; $i < $rowCount; $i++) {
       <div class="logout b-color">
           <a class="b-color" href="logout.php">logout</a>
       </div>
-      <div class="add-book">
-              <div class=" w-color ">
-                  <form action="admin_add.php" method="POST" id="formAdd">
-                      <input name="title" type="text" placeholder="Title"/>
-                      <input name="author" type="text" placeholder="Author"/>
-                      <input name="publisher" type="text" placeholder="Publisher"/>
-                      <input name="price" type="number" placeholder="Price"/>
-                      <input name="date" type="date"/>
-                      <textarea name="description" placeholder="Description"></textarea>
-                      <input type="submit" name="Submit" value="Add Book"/>
-                  </form>
-              </div>
-      </div>
+
   </section>
 </body>
-</html>");
+</html>
