@@ -51,7 +51,6 @@
                     }
                 </script>
             </div>
-
         </div>
     </div>
     </div>
@@ -61,18 +60,15 @@
 <?php
 include 'server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
-    $ADMINEMAIL = $_POST["email"];
-    $ADMINPASS = $_POST["password"];
-    $result = pg_query($connection, "SELECT * FROM administrator where admin_email = '$ADMINEMAIL' and admin_password='$ADMINPASS'");
+    $result = pg_query($connection, "SELECT * FROM administrator where admin_email = {$_POST['email']} and admin_password='{$_POST['password']}'");
     if ($result != 0) {
         session_start();
-        $_SESSION["logged"] = $ADMINEMAIL;
+        $_SESSION["logged"] = $_POST['email'];
         echo("{$_SESSION["logged"]}");
         header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
     } else {
         echo("erro");
     }
-
 }
 ?>
 
