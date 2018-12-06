@@ -6,6 +6,7 @@
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="assets/images/favicon.ico" />
+    <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
     <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="assets/CSS/catalog_admin.css" type="text/css">
@@ -34,7 +35,9 @@
 <section class="main">
     <div class="main_header">
         <h1>Catalog</h1>
-        <a href="admin_add.php">+</a>
+        <a class="plus" href="addBook.php">
+            <img class="plus-image"  src="assets/images/plus.png" alt="plus btn">
+        </a>
     </div>
     <?php
     include 'header.php';
@@ -43,62 +46,26 @@
         <div>
             <input type="search" placeholder="Search something...">
         </div>
-        <a class="plus" href="addBook.php">
-            <img class="plus-image"  src="assets/images/plus.png" alt="plus btn">
-        </a>
         <div class="main_books">
-        <?php
-        include 'server-connection.php';
-        $rowResource = pg_query($connection, "SELECT count(*) AS exact_count FROM livro");
-        $rowCount = pg_fetch_result($rowResource, 0, 0);
-
-        for ($i = 0; $i < $rowCount; $i++) {
-            $BOOKNAME = pg_query($connection, "SELECT book_name FROM livro");
-            $ALLBOOKS[$i]= pg_fetch_result($BOOKNAME,$i,0);
-            $BOOKPRICE = pg_query($connection, "SELECT book_price FROM livro");
-            $ALLPRICES[$i]= pg_fetch_result($BOOKPRICE,$i,0);
-            $BOOKID = pg_query($connection, "SELECT book_id FROM livro");
-            $ALLIDS[$i]= pg_fetch_result($BOOKID,$i,0);
-            $BOOKID = pg_query($connection, "SELECT book_id FROM livro");
-            $ALLIDS[$i]= pg_fetch_result($BOOKID,$i,0);
-        }
-        for ($i = 0; $i < $rowCount; $i++) {
-            echo (" <div class=\"book\">
-                        <div>
-                            <p class=\"book_title\">$ALLBOOKS[$i]</p>
-                            <p class=\"book_price\"> $ALLPRICES[$i]$</p>
-                        </div>
-                        <div>
-                            <p class=\"book_id\"> $ALLIDS[$i]</p>
-                        </div>
-                    </div>");
-        }
-        ?>
+            <?php
+            include 'server-connection.php';
+            $result = pg_query($connection, "select book_name, book_price, book_id from livro ");
+            $result = pg_fetch_all($result);
+            foreach ($result as $linha)
+            {
+                echo ("<a class=\"book\" href='SeeBook.php?id={$linha['book_id']}'>
+                          <div>
+                              <p class=\"book_title\">{$linha['book_name']}</p>
+                              <p class=\"book_price\">{$linha['book_price']}$</p>
+                          </div>
+                          <div>
+                              <p class=\"book_id\">{$linha['book_id']}</p>
+                          </div>
+                       </a>");
+            }
+            ?>
     </div>
     </div>
 </section>
 </body>
 </html>
-
-
-<?php
-include 'server-connection.php';
-$rowResource = pg_query($connection, "SELECT * FROM livro");
-$rowCount =  pg_num_rows($rowResource);
-
-for ($i = 0; $i < $rowCount; $i++) {
-    $BOOKNAME = pg_query($connection, "SELECT book_name FROM livro");
-    $BOOKNAME2= pg_fetch_result($BOOKNAME,$i,0);
-    echo $BOOKNAME2;
-    $BOOKID = pg_query($connection, "SELECT book_id FROM livro");
-    $BOOKID2= pg_fetch_result($BOOKID,$i,0);
-    echo $BOOKID2;
-    echo "
-            <div class=\"row\">
-            <div class=\"col-xs-6\">
-    <a href='SeeBook.php?id=" . $BOOKID2 . "'> See Book </a>
-                </div>        </div>
-    "
-    ;
-}
-?>

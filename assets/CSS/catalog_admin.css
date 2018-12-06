@@ -61,18 +61,6 @@ h1 {
     padding-right: 1em;
 }
 
-.main_header a {
-    border-radius: .5em;
-    background-color: #C4C4C4;
-    color: var(--color-black);
-    padding: 0 .5em;
-}
-
-.main_header a:hover {
-    background-color: var(--color-black);
-    color: var(--color-white);
-}
-
 input[type="search"] {
     width: 30rem;
     padding: .5rem 1rem;
@@ -98,3 +86,11 @@ input[type="search"]:hover, input[type="search"]:focus {
     height: 35px;
 }
 
+.main_books a {
+    color: var(--color-black);
+}
+
+.main_books a:hover {
+    color: var(--color-white);
+    background: linear-gradient(to right, #1d4350, #a43931);
+}
