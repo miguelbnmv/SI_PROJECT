@@ -64,8 +64,7 @@ if(isset($_POST["email"]) || isset($_POST["password"])) {
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $_POST['email'];
-        echo("{$_SESSION["logged"]}");
-        header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
++        header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
     } else {
         echo("erro");
     }
