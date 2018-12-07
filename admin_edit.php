@@ -36,7 +36,7 @@ $BOOKDESCRIPTION = pg_query($connection, "SELECT book_description FROM livro ");
 $BOOKDESCRIPTION1 = pg_fetch_result($BOOKDATE, 0, 0);
 
     echo"
-     <form method='POST' action='admin_edit.php' >
+     <form method='POST' >
     <li>Book Name:</li>
     <li><input type='text' name='book_name' value='$BOOKNAME1' /></li>
     <li>Price (USD):</li><li><input type='text' name='book_price' value='$BOOKPRICE1' /></li>
@@ -48,18 +48,21 @@ $BOOKDESCRIPTION1 = pg_fetch_result($BOOKDATE, 0, 0);
 
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $var=$_GET['user'];
         $BOOKNAMEUPDATE = $_POST["book_name"];
         $BOOKPRICEUPDATE = $_POST["book_price"];
         $BOOKDATEUPDATE = $_POST["book_date"];
-        $query = "UPDATE livro SET '$BOOKNAME1' = '$BOOKNAMEUPDATE' ";
+        $query ="UPDATE livro 
+        SET (book_name, book_price, book_date) = 
+        ('$BOOKNAMEUPDATE','$BOOKPRICEUPDATE','$BOOKDATEUPDATE')
+        WHERE book_id= '$SelectedBookId' ";
         $result = pg_query($query);
 
         if (!$result) {
             echo "Update failed!!";
-            header("Location: http://localhost:63342/SI_PROJECT/SeeBook.php . '$BOOKID2' ." );
         } else {
             echo "Update successfull;";
-            header("Location: http://localhost:63342/SI_PROJECT/SeeBook.php . '$BOOKID2' ." );
+            header("Location: http://localhost:63342/SI_PROJECT/admin_catalog.php");
         }
 
 }?>
