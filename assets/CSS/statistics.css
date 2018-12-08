@@ -1,0 +1,130 @@
+.main {
+    padding: 4em;
+}
+.main_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.main-container {
+    padding: 2em;
+}
+.main_books {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.title_sidebar {
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    margin: 0;
+    padding: 100px 5px 0 5px;
+}.main {
+     padding: 4em;
+ }
+.main_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.main-container {
+    padding: 2em;
+}
+.main_books {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+.title_sidebar {
+    font-family: "Open Sans", sans-serif;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    margin: 0;
+    padding: 100px 5px 0 5px;
+}
+.book {
+    width: 15em;
+    height: 3em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+    margin: 0 2em 2em 0;
+    background: var(--color-grey);
+    font-Family: "Open Sans",sans-serif;
+    font-size: 16px;
+    letter-spacing: normal;
+}
+
+.book_title {
+    font-weight: bold;
+    line-height: 19px;
+    padding-bottom: .5em;
+}
+.book_price {
+    font-weight: lighter;
+    line-height: 16px;
+}
+
+.book_id {
+    font-weight: bolder;
+    font-size: 36px;
+    line-height: 16px;
+}
+
+h1 {
+    margin: 0;
+    padding-right: 1em;
+}
+
+input[type="search"] {
+    width: 30rem;
+    padding: .5rem 1rem;
+    background-color: var(--color-grey);
+    color: #C4C4C4;
+    border: none;
+    border-radius: 1rem;
+    font-weight: lighter;
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 2em;
+}
+
+input[type="search"]:hover, input[type="search"]:focus {
+    border: 1px solid var(--color-black);
+}
+
+.plus{
+
+}
+.plus-image{
+    width: 35px;
+    height: 35px;
+}
+
+.main_books a {
+    color: var(--color-black);
+}
+
+.main_books a:hover {
+    color: var(--color-white);
+    background: linear-gradient(to right, #1d4350, #a43931);
+}
+.card{
+    background: #E9E9E9;
+    border-radius: 11px;
+    width: 304px;
+    height: 324px;
+    margin-right: 20px ;
+    margin-bottom: 20px;
+}

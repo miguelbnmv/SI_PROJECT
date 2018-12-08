@@ -60,13 +60,16 @@
 <?php
 include 'server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
+    $USEREMAIL = $_POST["email"];
     $USERPASS = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '{$_POST["email"]}' and cliente_password='$USERPASS'");
+    $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '$USEREMAIL' and cliente_password='$USERPASS'");
     if ($result != 0) {
         session_start();
-        $_SESSION["logged"] = $_POST["email"];
+        $_SESSION["logged"] = $USEREMAIL;
+        echo("{$_SESSION["logged"]}");
         header("Location: http://localhost:63342/SI_PROJECT/user_catalog.php");
     } else {
+        echo("erro");
     }
 }
 ?>
