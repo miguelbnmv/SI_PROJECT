@@ -51,7 +51,7 @@
             <div class="main_comments">
                <?php
                include 'server-connection.php';
-               $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id");
+               $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and livro_id={$_GET['id']}");
                $result = pg_fetch_all($result);
                foreach ($result as $linha)
                {
