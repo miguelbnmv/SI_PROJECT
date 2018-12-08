@@ -51,8 +51,8 @@
                     include 'server-connection.php';
                     $result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro WHERE book_id = {$_GET['id']}");
                     $result = pg_fetch_all($result);
-
-                    foreach ($result as $linha) {
+                    foreach ($result as $linha)
+                    {
                         echo("
                             <div class=\"row middle-xs m-top\">
                                 <p>Book Title</p>
@@ -124,7 +124,7 @@
                         <div class="col-xs-9 book-info">
                             <p>Boo Title</p>
                             <?php
-                                echo("<a class=\"b-color\" href='admin_edit.php?id=" . $_GET['id'] . "'>See More</a>")
+                                echo("<a class=\"b-color\" href='admin_comments.php?id=" . $_GET['id'] . "'>See More</a>")
                             ?>
                         </div>
                     </div>

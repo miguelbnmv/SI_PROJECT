@@ -39,7 +39,6 @@
             <input type="checkbox" onclick="checkFluency()" id="fluency" />
             <span class="w-color">Administrator</span>
         </form>
-
         <script>
             function checkFluency(){
                 var checkbox = document.getElementById('fluency');
@@ -51,9 +50,8 @@
                 }
             }
         </script>
-</div>
-
-</div>
+            </div>
+        </div>
     </div>
   </div>
 </section>

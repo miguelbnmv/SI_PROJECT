@@ -61,31 +61,23 @@
         include 'header.php';
       ?>
       <div class="main-container">
-<?php
-include 'server-connection.php';
-$rowResource = pg_query($connection, "SELECT count(*) AS exact_count FROM livro");
-$rowCount = pg_fetch_result($rowResource, 0, 0);
-
-for ($i = 0; $i < $rowCount; $i++) {
-    $BOOKNAME = pg_query($connection, "SELECT book_name FROM livro");
-    $ALLBOOKS[$i]= pg_fetch_result($BOOKNAME,$i,0);
-    $BOOKPRICE = pg_query($connection, "SELECT book_price FROM livro");
-    $ALLPRICES[$i]= pg_fetch_result($BOOKPRICE,$i,0);
-}
-    for ($i = 0; $i < $rowCount; $i++) {
+        <?php
+        include 'server-connection.php';
+        $result = pg_query($connection, "SELECT book_name, book_price FROM livro");
+        $result = pg_fetch_all($result);
+        foreach ($result as $linha)
+        {
         echo ("<div class=\"book\">
-          <img src=\"assets/images/cover.jpg\">
-          <p class=\"book_title\">$ALLBOOKS[$i]</p>
-          <p class=\"book_price\"> $ALLPRICES[$i]$</p>
-        </div>");
-     }
-?>
-    </div>
-
+                  <img src=\"assets/images/cover.jpg\">
+                  <p class=\"book_title\">{$linha['book_name']}</p>
+                  <p class=\"book_price\">{$linha['book_price']}€</p>
+               </div>");
+        }
+        ?>
+      </div>
       <div class="logout b-color">
           <a class="b-color" href="logout.php">logout</a>
       </div>
-
   </section>
 </body>
 </html>
