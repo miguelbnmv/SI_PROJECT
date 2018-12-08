@@ -63,11 +63,13 @@
 include 'server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
     $USEREMAIL = $_POST["email"];
+    $USERID = pg_query($connection, "SELECT cliente_id FROM cliente where cliente_email = '$USEREMAIL' and cliente_password='$USERPASS'");
     $USERPASS = password_hash($_POST["password"], PASSWORD_DEFAULT);
     $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '$USEREMAIL' and cliente_password='$USERPASS'");
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $USEREMAIL;
+        $_SESSION["logged-ID"] = $USERID;
         echo("{$_SESSION["logged"]}");
         header("Location: http://localhost:63342/SI_PROJECT/user_catalog.php");
     } else {

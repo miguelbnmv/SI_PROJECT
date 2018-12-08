@@ -23,10 +23,14 @@
     <label class="check_container">Statistics
         <input type="radio" name="radio">
         <span class="checkmark"></span>
+        <a href="statistics.php">hey</a>
     </label>
     <label class="check_container">Edit Account Settings
         <input type="radio" name="radio">
         <span class="checkmark"></span>
+        <?php echo "
+        <a href='admin_account-settings.php?id=" . $_GET['id'] . "'>hey2</a>"
+        ?>
     </label>
     <div class="logout w-color">
         <a class="w-color" href="logout.php">Logout</a>
