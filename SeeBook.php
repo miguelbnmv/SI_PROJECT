@@ -20,6 +20,8 @@
                  <h1>Black Panther </h1>
                 <?php
                 include 'header.php';
+                include 'server-connection.php';
+                $SelectedBookId =$_GET['id'];
                 ?>
         </div>
         <div class=" row center-xs middle-xs">
@@ -42,7 +44,7 @@
                         <?php echo "
                             <form action='admin_remove.php?id=" . $_GET['id'] . "' method='POST' id='formRemove'>
                             <input type='submit' name='Submit' value=''/>
-                        </form>"
+                            </form>"
                         ?>
                     </div>
             </div>
@@ -58,7 +60,7 @@
                     $BOOKDATE = pg_query($connection, "SELECT book_date FROM livro WHERE book_id = $SelectedBookId");
                     $BOOKDATE1 = pg_fetch_result($BOOKDATE, 0, 0);
                     $BOOKAUTHOR = pg_query($connection, "SELECT book_author FROM livro WHERE book_id = $SelectedBookId");
-                    $BOOKDAUTHOR1 = pg_fetch_result($BOOKDATE, 0, 0);
+                    $BOOKDAUTHOR1 = pg_fetch_result($BOOKAUTHOR, 0, 0);
                     $BOOKDESCRIPTION = pg_query($connection, "SELECT book_description FROM livro WHERE book_id = $SelectedBookId ");
                     $BOOKDESCRIPTION1 = pg_fetch_result($BOOKDATE, 0, 0);
                     echo ("<div class=\"row middle-xs m-top\">

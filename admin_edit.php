@@ -22,17 +22,17 @@
 include 'server-connection.php';
 $SelectedBookId =$_GET['id'];
 $rowResource = pg_query($connection, "SELECT * FROM livro WHERE book_id = $SelectedBookId");
-$BOOKNAME = pg_query($connection, "SELECT book_name FROM livro");
+$BOOKNAME = pg_query($connection, "SELECT book_name FROM livro WHERE book_id = $SelectedBookId");
 $BOOKNAME1 = pg_fetch_result($BOOKNAME, 0, 0);
-$BOOKPRICE = pg_query($connection, "SELECT book_price FROM livro ");
+$BOOKPRICE = pg_query($connection, "SELECT book_price FROM livro WHERE book_id = $SelectedBookId");
 $BOOKPRICE1 = pg_fetch_result($BOOKPRICE, 0, 0);
-$BOOKPUBLISHER = pg_query($connection, "SELECT book_publisher FROM livro");
+$BOOKPUBLISHER = pg_query($connection, "SELECT book_publisher FROM livro WHERE book_id = $SelectedBookId");
 $BOOKPUBLISHER1 = pg_fetch_result($BOOKPUBLISHER, 0, 0);
-$BOOKDATE = pg_query($connection, "SELECT book_date FROM livro ");
+$BOOKDATE = pg_query($connection, "SELECT book_date FROM livro WHERE book_id = $SelectedBookId");
 $BOOKDATE1 = pg_fetch_result($BOOKDATE, 0, 0);
-$BOOKAUTHOR = pg_query($connection, "SELECT book_author FROM livro");
+$BOOKAUTHOR = pg_query($connection, "SELECT book_author FROM livro WHERE book_id = $SelectedBookId");
 $BOOKDAUTHOR1 = pg_fetch_result($BOOKDATE, 0, 0);
-$BOOKDESCRIPTION = pg_query($connection, "SELECT book_description FROM livro ");
+$BOOKDESCRIPTION = pg_query($connection, "SELECT book_description FROM livro WHERE book_id = $SelectedBookId");
 $BOOKDESCRIPTION1 = pg_fetch_result($BOOKDATE, 0, 0);
 
     echo"
@@ -62,7 +62,7 @@ $BOOKDESCRIPTION1 = pg_fetch_result($BOOKDATE, 0, 0);
             echo "Update failed!!";
         } else {
             echo "Update successfull;";
-            header("Location: http://localhost:63342/SI_PROJECT/admin_catalog.php");
+            header('Location: http://localhost:63342/SI_PROJECT/SeeBook.php?id=' . $_GET['id']);
         }
 
 }?>
