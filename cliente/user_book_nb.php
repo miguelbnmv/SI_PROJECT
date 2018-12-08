@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/admin_comments.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/sidebar.css" type="text/css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/admin_comments.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
 <?php
-include 'server-connection.php';
+include '../geral/server-connection.php';
 $result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro WHERE book_id = {$_GET['id']}");
 $result = pg_fetch_all($result);
 
@@ -34,7 +34,7 @@ foreach ($result as $linha) {
     ?>
 <section class="main">
     <?php
-    include 'header.php';
+    include '../geral/header.php';
     ?>
     <div class="main-container">
         <div class="create_comment">
@@ -48,7 +48,7 @@ foreach ($result as $linha) {
         </div>
         <div class="main_comments">
             <?php
-            include 'server-connection.php';
+            include '../geral/server-connection.php';
             $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and livro_id={$_GET['id']}");
             $result = pg_fetch_all($result);
             foreach ($result as $linha)

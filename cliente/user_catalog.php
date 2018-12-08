@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/catalog.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/sidebar.css" type="text/css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/catalog.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -58,17 +58,17 @@
   </div>
   <section class="main">
       <?php
-        include 'header.php';
+        include '../geral/header.php';
       ?>
       <div class="main-container">
         <?php
-        include 'server-connection.php';
+        include '../geral/server-connection.php';
         $result = pg_query($connection, "SELECT book_name, book_price FROM livro");
         $result = pg_fetch_all($result);
         foreach ($result as $linha)
         {
         echo ("<div class=\"book\">
-                  <img src=\"assets/images/cover.jpg\">
+                  <img src=\"../assets/images/cover.jpg\">
                   <p class=\"book_title\">{$linha['book_name']}</p>
                   <p class=\"book_price\">{$linha['book_price']}€</p>
                </div>");
@@ -76,7 +76,7 @@
         ?>
       </div>
       <div class="logout b-color">
-          <a class="b-color" href="logout.php">logout</a>
+          <a class="b-color" href="../geral/logout.php">logout</a>
       </div>
   </section>
 </body>

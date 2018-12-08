@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/statistics.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/sidebar.css" type="text/css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/statistics.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -29,7 +29,7 @@
         <span class="checkmark"></span>
     </label>
     <div class="logout w-color">
-        <a class="w-color" href="logout.php">Logout</a>
+        <a class="w-color" href="../geral/logout.php">Logout</a>
     </div>
 </div>
 <section class="main">
@@ -37,14 +37,14 @@
         <h1>Statistics</h1>
     </div>
     <?php
-    include 'header.php';
+    include '../geral/header.php';
     ?>
     <div class="row">
         <div class="col-xs-10">
     <div class="main-container">
         <div class="main_books">
             <?php
-            include 'server-connection.php';
+            include '../geral/server-connection.php';
             $rowResourcebook = pg_query($connection, "SELECT * FROM livro");
             $rowCountbook =  pg_num_rows($rowResourcebook);
             $rowResourceuser = pg_query($connection, "SELECT * FROM cliente");

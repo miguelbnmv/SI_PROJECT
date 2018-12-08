@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <title>ViewComics inc.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="assets/images/favicon.ico" />
-  <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
-  <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-  <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-  <link rel="stylesheet" href="assets/CSS/form.css" type="text/css">
+  <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+  <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
+  <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+  <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+  <link rel="stylesheet" href="../assets/CSS/form.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -35,7 +35,7 @@
   <div class="sign-up">
   <p>Doesn't have an account?</p>
   <a  href="register.php">Sign up</a>
-        <form action="form-action.php" method="post">
+        <form action="../geral/form-action.php" method="post">
             <input type="checkbox" onclick="checkFluency()" id="fluency" />
             <span class="w-color">Administrator</span>
         </form>
@@ -43,10 +43,10 @@
             function checkFluency(){
                 var checkbox = document.getElementById('fluency');
                 if (checkbox.checked = true){
-                    window.location = "verifica_admin.php";
+                    window.location = "../admin/verifica_admin.php";
                 }
                 else {
-                    window.location = "verifica_user.php";
+                    window.location = "../cliente/verifica_user.php";
                 }
             }
         </script>
@@ -58,7 +58,7 @@
 </body>
 </html>
 <?php
-include 'server-connection.php';
+include '../geral/server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
     $USEREMAIL = $_POST["email"];
     $USERPASS = password_hash($_POST["password"], PASSWORD_DEFAULT);
@@ -67,7 +67,7 @@ if(isset($_POST["email"]) || isset($_POST["password"])) {
         session_start();
         $_SESSION["logged"] = $USEREMAIL;
         echo("{$_SESSION["logged"]}");
-        header("Location: http://localhost:63342/SI_PROJECT/user_catalog.php");
+        header("Location: http://localhost:63342/SI_PROJECT/cliente/user_catalog.php");
     } else {
         echo("erro");
     }
