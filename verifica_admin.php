@@ -61,10 +61,11 @@
 include 'server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
     $result = pg_query($connection, "SELECT * FROM administrator where admin_email = {$_POST['email']} and admin_password='{$_POST['password']}'");
+    $result = pg_fetch_result($result, 0);
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $_POST['email'];
-+        header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
+        header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
     } else {
         echo("erro");
     }
