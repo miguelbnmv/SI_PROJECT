@@ -27,8 +27,8 @@
             </div>
             <div class="col-xs-6 form admin ">
                 <form method="POST" id="formLogin" >
-                    <input name="email" type="text" id="email" placeholder="Email" />
-                    <input name="password" type="password" id="password" placeholder="Password"/>
+                    <input name="email" type="text" id="email" placeholder="Email" required/>
+                    <input name="password" type="password" id="password" placeholder="Password" required/>
                     <input type="submit" name="Submit" value="LOGIN" />
                 </form>
                 <div class="sign-up">
@@ -63,13 +63,13 @@ if(isset($_POST["email"]) || isset($_POST["password"])) {
     $ADMINEMAIL = $_POST["email"];
     $ADMINPASS = $_POST["password"];
     $result = pg_query($connection, "SELECT * FROM administrator where admin_email = '$ADMINEMAIL' and admin_password='$ADMINPASS'");
-    $ADMINPASS = pg_query($connection, "SELECT admin_id FROM administrator WHERE admin_email = '$ADMINEMAIL' and admin_password='$ADMINPASS'");
-    $ADMINPASS1=  pg_fetch_result($ADMINPASS, 0, 0);
+    $ADMINID = pg_query($connection, "SELECT admin_id FROM administrator WHERE admin_email = '$ADMINEMAIL' and admin_password='$ADMINPASS'");
+    $ADMINID1=  pg_fetch_result($ADMINID, 0, 0);
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $ADMINEMAIL;
         echo("{$_SESSION["logged"]}");
-        header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php?id='. $ADMINPASS1);
+        header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php?id='. $ADMINID1);
     } else {
         echo("erro");
     }

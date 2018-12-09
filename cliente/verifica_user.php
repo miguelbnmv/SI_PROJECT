@@ -28,8 +28,8 @@
     <div class="col-xs-6 w-color form ">
     <form method="POST" id="formLogin">
 
-        <input name="email" type="text" id="email" placeholder="Email" />
-        <input name="password" type="password" id="password" placeholder="Password"/>
+        <input name="email" type="text" id="email" placeholder="Email" required/>
+        <input name="password" type="password" id="password" placeholder="Password" required/>
     <input type="submit" name="Submit" value="LOGIN" />
     </form>
   <div class="sign-up">
@@ -56,22 +56,26 @@
   </div>
 </section>
 </body>
-</html>
 <?php
 include '../geral/server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
     $USEREMAIL = $_POST["email"];
     $USERPASS = password_hash($_POST["password"], PASSWORD_DEFAULT);
     $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '$USEREMAIL' and cliente_password='$USERPASS'");
+    $USERID = pg_query($connection, "SELECT cliente_id FROM cliente WHERE cliente_email = '$USEREMAIL' ");
+    $USERID1=  pg_fetch_result($USERID, 0, 0);
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $USEREMAIL;
         echo("{$_SESSION["logged"]}");
-        header("Location: http://localhost:63342/SI_PROJECT/cliente/user_catalog.php");
+        header('Location: http://localhost:63342/SI_PROJECT/cliente/user_catalog.php');
     } else {
         echo("erro");
     }
 }
 ?>
+</html>
+
+
 
 

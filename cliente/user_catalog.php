@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
+
   <div id="mySidenav" class="sidenav w-color">
       <p class="sidebar_title">To make your life </br><strong>a lot easier</strong>, sort by</p>
       <label class="check_container">Author
@@ -45,6 +46,15 @@
           <span class="checkmark"></span>
         </label>
       </div>
+      <?php
+      include '../geral/header.php';
+      include '../geral/server-connection.php';
+
+      echo"
+   
+      <a href='../cliente/cliente_account-settings.php?id' > oi mano</a>
+        <a href='../cliente/cliente_account-favorites.php?id' > oi mano fav</a>
+      " ?>
       <script type="text/javascript">
           function displayForm(c){
               if(c.value == "1"){
@@ -57,21 +67,25 @@
       </script>
   </div>
   <section class="main">
-      <?php
-        include '../geral/header.php';
-      ?>
+
       <div class="main-container">
         <?php
-        include '../geral/server-connection.php';
-        $result = pg_query($connection, "SELECT book_name, book_price FROM livro");
+        $result = pg_query($connection, "SELECT book_name, book_price,book_id FROM livro");
         $result = pg_fetch_all($result);
         foreach ($result as $linha)
         {
-        echo ("<div class=\"book\">
-                  <img src=\"../assets/images/cover.jpg\">
+        echo "
+    <div class=\"book\">
+        <a href='user_book_nb.php?id={$linha['book_id']}'>
+    
                   <p class=\"book_title\">{$linha['book_name']}</p>
                   <p class=\"book_price\">{$linha['book_price']}€</p>
-               </div>");
+                       </a>
+               </div>
+          
+               
+               ";
+
         }
         ?>
       </div>
@@ -81,3 +95,5 @@
   </section>
 </body>
 </html>
+
+

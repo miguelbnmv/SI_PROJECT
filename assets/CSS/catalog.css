@@ -46,3 +46,8 @@ img {
     width: 75%;
     height: auto;
 }
+button img{
+    width: 13px;
+    height: 13px;
+
+}

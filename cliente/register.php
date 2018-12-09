@@ -62,11 +62,9 @@ if(isset($_POST["firstname"]) || isset($_POST["lastname"]) || isset($_POST["emai
             if ($findResult2 != 0) {
                 echo "<script type='text/javascript'>alert('Email Already Exists');</script>";
             } else {
-                $rowResource = pg_query($connection, "SELECT count(*) AS exact_count FROM cliente");
-                $rowCount = pg_fetch_result($rowResource, 0, 0);
-                $query = "INSERT INTO cliente VALUES ($rowCount+1,'$USERFISRTNAME','$USERLASTNAME','$USEREMAIL','$USERCRIPTPASS',200,'TRUE')";
+                $query = "INSERT INTO cliente (cliente_firstname, cliente_lastname, cliente_email, cliente_password, cliente_balance,cliente_notifications) VALUES ('$USERFISRTNAME', '$USERLASTNAME', '$USEREMAIL', '$USERCRIPTPASS', 200, 'TRUE')";
                 $result = pg_query($query);
-                header("Location: http://localhost:63342/SI_PROJECT/cliente/verifica_user.php");
+                header('Location: http://localhost:63342/SI_PROJECT/cliente/verifica_user.php');
             }
         } else {
             echo "<script type='text/javascript'>alert('The passwords do not match');</script>";
