@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/register.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/form.css" type="text/css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/register.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/form.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -46,7 +46,7 @@
 </body>
 </html>
 <?php
-include 'server-connection.php';
+include '../geral/server-connection.php';
 if(isset($_POST["firstname"]) || isset($_POST["lastname"]) || isset($_POST["email"]) || isset($_POST["password"]) || isset($_POST["confirm_password"])) {
     $USERFISRTNAME = clean($_POST["firstname"]);
     $USERLASTNAME = clean($_POST["lastname"]);
@@ -62,11 +62,9 @@ if(isset($_POST["firstname"]) || isset($_POST["lastname"]) || isset($_POST["emai
             if ($findResult2 != 0) {
                 echo "<script type='text/javascript'>alert('Email Already Exists');</script>";
             } else {
-                $rowResource = pg_query($connection, "SELECT count(*) AS exact_count FROM cliente");
-                $rowCount = pg_fetch_result($rowResource, 0, 0);
-                $query = "INSERT INTO cliente VALUES ($rowCount+1,'$USERFISRTNAME','$USERLASTNAME','$USEREMAIL','$USERCRIPTPASS',200,'TRUE')";
+                $query = "INSERT INTO cliente (cliente_firstname, cliente_lastname, cliente_email, cliente_password, cliente_balance,cliente_notifications) VALUES ('$USERFISRTNAME', '$USERLASTNAME', '$USEREMAIL', '$USERCRIPTPASS', 200, 'TRUE')";
                 $result = pg_query($query);
-                header("Location: http://localhost:63342/SI_PROJECT/verifica_user.php");
+                header('Location: http://localhost:63342/SI_PROJECT/cliente/verifica_user.php');
             }
         } else {
             echo "<script type='text/javascript'>alert('The passwords do not match');</script>";

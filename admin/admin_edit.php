@@ -19,14 +19,14 @@
     <div class="container container-fluid">
 
 <?php
-include 'server-connection.php';
+include '../geral/server-connection.php';
 $SelectedBookId =$_GET['id'];
 $result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro WHERE book_id = $SelectedBookId");
 $result = pg_fetch_all($result);
 
 foreach ($result as $linha) {
     echo("
-     <form method='POST' action='admin_edit.php' >
+     <form method='POST' action='admin/admin_edit.php' >
         <li>Book Name:</li>
         <li><input type='text' name='book_name' value='{$linha['book_name']}' /></li>
         <li>Price (USD):</li><li><input type='text' name='book_price' value='{$linha['book_price']}' /></li>
@@ -51,7 +51,7 @@ foreach ($result as $linha) {
             echo "Update failed!!";
         } else {
             echo "Update successfull;";
-            header('Location: http://localhost:63342/SI_PROJECT/SeeBook.php?id='. $SelectedBookId);
+            header('Location: http://localhost:63342/SI_PROJECT/admin/SeeBook.php?id='. $SelectedBookId);
         }
 }?>
     </div>
