@@ -15,46 +15,29 @@
 <body>
   <div id="mySidenav" class="sidenav w-color">
       <p class="sidebar_title">To make your life </br><strong>a lot easier</strong>, sort by</p>
-      <label class="check_container">Author
-        <input type="radio" checked="checked" name="radio">
-        <span class="checkmark"></span>
-      </label>
-      <label class="check_container">Year
-        <input type="radio" name="radio">
-        <span class="checkmark"></span>
-      </label>
-      <label class="check_container">Price
-        <input type="radio" name="radio">
-        <span class="checkmark"></span>
-      </label>
-      <label class="check_container">Publishing Company
-          <input type="radio" name="radio">
-          <span onclick="displayForm(this)" value="1" class="checkmark"></span>
-      </label>
-      <div id="panel">
-        <label class="check_container">Marvel
-          <input type="radio" name="radio">
-          <span class="checkmark"></span>
-        </label>
-        <label class="check_container">DC Comics
-          <input type="radio" name="radio">
-          <span class="checkmark"></span>
-        </label>
-        <label class="check_container">Others
-          <input type="radio" name="radio">
-          <span class="checkmark"></span>
-        </label>
-      </div>
-      <script type="text/javascript">
-          function displayForm(c){
-              if(c.value == "1"){
-                  document.getElementById("panel").style.visibility='visible';
-              }
-              else{
-                  document.getElementById("panel").style.visibility='hidden';
-              }
-          }
-      </script>
+      <form method="POST" id="formCreateComment">
+          <label class="check_container">Name
+              <input type="radio" name="order" value="book_name">
+              <span value="book_name" class="checkmark"></span>
+          </label>
+          <label class="check_container">Author
+              <input type="radio" name="order" value="book_author">
+            <span value="book_author" class="checkmark"></span>
+          </label>
+          <label class="check_container">Year
+              <input type="radio" name="order" value="book_date">
+            <span value="book_date" class="checkmark"></span>
+          </label>
+          <label class="check_container">Price
+              <input type="radio" name="order" value="book_price">
+            <span value="book_price" class="checkmark"></span>
+          </label>
+          <label class="check_container">Publishing Company
+              <input type="radio" name="order" value="book_publisher">
+              <span value="book_publisher" class="checkmark"></span>
+          </label>
+          <input type='submit' value='submit_order' name='submit_rating'>
+      </form>
   </div>
   <section class="main">
       <?php
@@ -63,15 +46,29 @@
       <div class="main-container">
         <?php
         include 'server-connection.php';
-        $result = pg_query($connection, "SELECT book_name, book_price FROM livro");
-        $result = pg_fetch_all($result);
-        foreach ($result as $linha)
-        {
-        echo ("<div class=\"book\">
-                  <img src=\"assets/images/cover.jpg\">
-                  <p class=\"book_title\">{$linha['book_name']}</p>
-                  <p class=\"book_price\">{$linha['book_price']}€</p>
-               </div>");
+
+        if(isset($_POST["submit_rating"])) {
+            $result = pg_query($connection, "SELECT book_name, book_author, book_price, book_publisher, book_date FROM livro order by {$_POST["order"]}");
+            $result = pg_fetch_all($result);
+            foreach ($result as $linha)
+            {
+                echo ("<div class=\"book\">
+                      <img src=\"assets/images/cover.jpg\">
+                      <p class=\"book_title\">{$linha['book_name']}</p>
+                      <p class=\"book_price\">{$linha['book_price']}€</p>
+                   </div>");
+            }
+        } else {
+            $result = pg_query($connection, "SELECT book_name, book_author, book_price, book_publisher, book_date FROM livro");
+            $result = pg_fetch_all($result);
+            foreach ($result as $linha)
+            {
+               echo ("<div class=\"book\">
+                      <img src=\"assets/images/cover.jpg\">
+                      <p class=\"book_title\">{$linha['book_name']}</p>
+                      <p class=\"book_price\">{$linha['book_price']}€</p>
+                   </div>");
+            }
         }
         ?>
       </div>

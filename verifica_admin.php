@@ -64,16 +64,25 @@ if(isset($_POST["email"]) || isset($_POST["password"])) {
     $ADMINPASS = $_POST["password"];
     $result = pg_query($connection, "SELECT * FROM administrator where admin_email = '$ADMINEMAIL' and admin_password='$ADMINPASS'");
     $ADMINPASS = pg_query($connection, "SELECT admin_id FROM administrator WHERE admin_email = '$ADMINEMAIL' and admin_password='$ADMINPASS'");
-    $ADMINPASS1=  pg_fetch_result($ADMINPASS, 0, 0);
+    $ADMINPASS1 = pg_fetch_result($ADMINPASS, 0, 0);
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $ADMINEMAIL;
         echo("{$_SESSION["logged"]}");
-        header('Location: http://localhost:63342/SI_PROJECT/admin_catalog.php?id='. $ADMINPASS1);
+        header('Location: http://localhost:63342/SI_PROJECT/admin_catalog.php?id=' . $ADMINPASS1);
+    }
+}
+/*
+    $result = pg_query($connection, "SELECT * FROM administrator where admin_email = {$_POST['email']} and admin_password='{$_POST['password']}'");
+    $result = pg_fetch_result($result, 0);
+    if ($result != 0) {
+        session_start();
+        $_SESSION["logged"] = $_POST['email'];
+        header("Location: http://localhost:63342/SI_PROJECT/catalogadmin.php");
     } else {
         echo("erro");
     }
-}
+}*/
 ?>
 
 
