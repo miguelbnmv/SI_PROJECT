@@ -5,11 +5,11 @@
   <meta charset="UTF-8">
   <title>ViewComics inc.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="assets/images/favicon.ico" />
-  <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
-  <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-  <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-  <link rel="stylesheet" href="assets/CSS/form.css" type="text/css">
+  <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+  <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
+  <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+  <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+  <link rel="stylesheet" href="../assets/CSS/form.css" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -28,14 +28,14 @@
     <div class="col-xs-6 w-color form ">
     <form method="POST" id="formLogin">
 
-        <input name="email" type="text" id="email" placeholder="Email" />
-        <input name="password" type="password" id="password" placeholder="Password"/>
+        <input name="email" type="text" id="email" placeholder="Email" required/>
+        <input name="password" type="password" id="password" placeholder="Password" required/>
     <input type="submit" name="Submit" value="LOGIN" />
     </form>
   <div class="sign-up">
   <p>Doesn't have an account?</p>
   <a  href="register.php">Sign up</a>
-        <form action="form-action.php" method="post">
+        <form action="../geral/form-action.php" method="post">
             <input type="checkbox" onclick="checkFluency()" id="fluency" />
             <span class="w-color">Administrator</span>
         </form>
@@ -43,10 +43,10 @@
             function checkFluency(){
                 var checkbox = document.getElementById('fluency');
                 if (checkbox.checked = true){
-                    window.location = "verifica_admin.php";
+                    window.location = "../admin/verifica_admin.php";
                 }
                 else {
-                    window.location = "verifica_user.php";
+                    window.location = "../cliente/verifica_user.php";
                 }
             }
         </script>
@@ -56,19 +56,26 @@
   </div>
 </section>
 </body>
-</html>
 <?php
-include 'server-connection.php';
+include '../geral/server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
+    $USEREMAIL = $_POST["email"];
     $USERPASS = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '{$_POST["email"]}' and cliente_password='$USERPASS'");
+    $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '$USEREMAIL' and cliente_password='$USERPASS'");
+    $USERID = pg_query($connection, "SELECT cliente_id FROM cliente WHERE cliente_email = '$USEREMAIL' ");
+    $USERID1=  pg_fetch_result($USERID, 0, 0);
     if ($result != 0) {
         session_start();
-        $_SESSION["logged"] = $_POST["email"];
-        header("Location: http://localhost:63342/SI_PROJECT/user_catalog.php");
+        $_SESSION["logged"] = $USEREMAIL;
+        echo("{$_SESSION["logged"]}");
+        header('Location: http://localhost:63342/SI_PROJECT/cliente/user_catalog.php');
     } else {
+        echo("erro");
     }
 }
 ?>
+</html>
+
+
 
 

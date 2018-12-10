@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>ViewComics inc.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
-    <link rel="stylesheet" href="assets/CSS/flexboxgrid.min.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/catalog_admin.css" type="text/css">
-    <link rel="stylesheet" href="assets/CSS/sidebar.css" type="text/css">
+    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
+    <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/catalog_admin.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
@@ -23,24 +23,28 @@
     <label class="check_container">Statistics
         <input type="radio" name="radio">
         <span class="checkmark"></span>
+        <a href="../admin/statistics.php">hey</a>
     </label>
     <label class="check_container">Edit Account Settings
         <input type="radio" name="radio">
         <span class="checkmark"></span>
+        <?php echo "
+        <a href='../admin/admin_account-settings.php?id=" . $_GET['id'] . "'>hey2</a>"
+        ?>
     </label>
     <div class="logout w-color">
-        <a class="w-color" href="logout.php">Logout</a>
+        <a class="w-color" href="../geral/logout.php">Logout</a>
     </div>
 </div>
 <section class="main">
     <div class="main_header">
         <h1>Catalog</h1>
         <a class="plus" href="addBook.php">
-            <img class="plus-image"  src="assets/images/plus.png" alt="plus btn">
+            <img class="plus-image"  src="../assets/images/plus.png" alt="plus btn">
         </a>
     </div>
     <?php
-    include 'header.php';
+    include '../geral/header.php';
     ?>
     <div class="main-container">
         <div>
@@ -48,7 +52,7 @@
         </div>
         <div class="main_books">
             <?php
-            include 'server-connection.php';
+            include '../geral/server-connection.php';
             $result = pg_query($connection, "select book_name, book_price, book_id from livro ");
             $result = pg_fetch_all($result);
             foreach ($result as $linha)

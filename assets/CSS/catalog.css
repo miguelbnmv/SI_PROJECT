@@ -34,6 +34,8 @@ section {
     font-size: 12px;
     line-height: 19px;
     letter-spacing: normal;
+    color: var(--color-black);
+
 }
 .book_price {
     font-Family: "Open Sans",sans-serif;
@@ -41,8 +43,14 @@ section {
     font-size: 12px;
     line-height: 16px;
     letter-spacing: normal;
+    color: var(--color-black);
+
 }
 img {
     width: 75%;
     height: auto;
+}
+button img{
+    width: 13px;
+    height: 13px;
 }
