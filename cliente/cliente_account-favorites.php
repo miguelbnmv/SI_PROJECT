@@ -42,26 +42,26 @@
     ?>
     <div class="row">
         <div class="col-xs-10">
-
             <section class="main">
-
                 <div class="main-container">
                     <?php
-                    $result = pg_query($connection, "SELECT livro.book_id,favorite.book_id, book_name, book_price FROM livro,favorite WHERE favorite.book_id = livro.book_id and favorite=true and cliente_id=((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'))");
+                    $result = pg_query($connection, "SELECT livro.book_id, favorite.book_id, book_name, book_price FROM livro,favorite WHERE favorite.book_id = livro.book_id and favorite=true and cliente_id={$_SESSION["user_logged_id"]}");
+                    $result_count = pg_numrows($result);
                     $result = pg_fetch_all($result);
-                    foreach ($result as $linha)
-                    {
-                        echo "
-                 <div class=\"book\">
-                      <a href='user_book_nb.php?id={$linha['book_id']}'>
-                         <p class=\"book_title\">{$linha['book_name']}</p>
-                         <p class=\"book_title\">{$linha['book_price']}</p>
-                       </a>
-                 </div>
-          
-               
-               ";
-
+                    if($result_count==0) {
+                        echo "Não há livros favoritos";
+                    }
+                    else if ($result_count>0) {
+                        foreach ($result as $linha) {
+                            echo "
+                             <div class=\"book\">
+                                  <a href='user_book_nb.php?id={$linha['book_id']}'>
+                                     <p class=\"book_title\">{$linha['book_name']}</p>
+                                     <p class=\"book_title\">{$linha['book_price']}</p>
+                                   </a>
+                             </div>
+                      ";
+                        }
                     }
                     ?>
                 </div>

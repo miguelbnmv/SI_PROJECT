@@ -45,10 +45,9 @@
       include '../geral/server-connection.php';
 
       echo"
-   
-      <a href='../cliente/cliente_account-settings.php?id' > oi mano</a>
-        <a href='../cliente/cliente_account-favorites.php?id' > oi mano fav</a>
-      " ?>
+          <a href='../cliente/cliente_account-settings.php'> oi mano</a>
+          <a href='../cliente/cliente_account-favorites.php'> oi mano fav</a>
+          " ?>
       <script type="text/javascript">
           function displayForm(c){
               if(c.value == "1"){
@@ -61,11 +60,9 @@
       </script>
   </div>
   <section class="main">
-
       <div class="main-container">
         <?php
         include '../geral/server-connection.php';
-
         if(isset($_POST["submit_rating"])) {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);

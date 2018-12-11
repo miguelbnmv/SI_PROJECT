@@ -57,12 +57,11 @@ if(isset($_POST["firstname"]) || isset($_POST["lastname"]) || isset($_POST["emai
     $findResult2 = pg_fetch_result($findResult, 0, 0);
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($USERPASS == $USERCPASS) {
-            $USERCRIPTPASS = password_hash($USERPASS, PASSWORD_DEFAULT);
             echo ($findResult2);
             if ($findResult2 != 0) {
                 echo "<script type='text/javascript'>alert('Email Already Exists');</script>";
             } else {
-                $query = "INSERT INTO cliente (cliente_firstname, cliente_lastname, cliente_email, cliente_password, cliente_balance,cliente_notifications) VALUES ('$USERFISRTNAME', '$USERLASTNAME', '$USEREMAIL', '$USERCRIPTPASS', 200, 'TRUE')";
+                $query = "INSERT INTO cliente (cliente_firstname, cliente_lastname, cliente_email, cliente_password, cliente_balance,cliente_notifications) VALUES ('$USERFISRTNAME', '$USERLASTNAME', '$USEREMAIL', '$USERPASS', 200, 'TRUE')";
                 $result = pg_query($query);
                 header('Location: http://localhost:63342/SI_PROJECT/cliente/verifica_user.php');
             }

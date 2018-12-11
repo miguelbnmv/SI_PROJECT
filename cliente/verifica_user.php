@@ -34,7 +34,7 @@
     </form>
   <div class="sign-up">
   <p>Doesn't have an account?</p>
-  <a  href="register.php">Sign up</a>
+  <a href="register.php">Sign up</a>
         <form action="../geral/form-action.php" method="post">
             <input type="checkbox" onclick="checkFluency()" id="fluency" />
             <span class="w-color">Administrator</span>
@@ -60,14 +60,15 @@
 include '../geral/server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
     $USEREMAIL = $_POST["email"];
-    $USERPASS = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $USERPASS = $_POST["password"];
     $result = pg_query($connection, "SELECT * FROM cliente where cliente_email = '$USEREMAIL' and cliente_password='$USERPASS'");
+    $result = pg_numrows($result);
     $USERID = pg_query($connection, "SELECT cliente_id FROM cliente WHERE cliente_email = '$USEREMAIL' ");
     $USERID1=  pg_fetch_result($USERID, 0, 0);
     if ($result != 0) {
         session_start();
         $_SESSION["logged"] = $USEREMAIL;
-        echo("{$_SESSION["logged"]}");
+        $_SESSION["user_logged_id"] = $USERID1;
         header('Location: http://localhost:63342/SI_PROJECT/cliente/user_catalog.php');
     } else {
         echo("erro");
