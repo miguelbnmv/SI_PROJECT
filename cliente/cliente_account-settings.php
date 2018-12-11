@@ -31,6 +31,9 @@
     <div class="logout w-color">
         <a class="w-color" href="../geral/logout.php">Logout</a>
     </div>
+    <div class="w-color">
+        <a class="w-color" href="../cliente/cliente_account-collection.php">Coleção</a>
+    </div>
 </div>
 <section class="main">
     <div class="main_header">
@@ -47,42 +50,35 @@
                 <div class="main_books">
                     <?php
                     include '../geral/server-connection.php';
-                    $query = pg_query($connection,"select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'");
-                    $result = pg_fetch_all($query);
-                    foreach($result as $linha) {
-                        $SelectedClienteId =  $linha['cliente_id'];
+                    $result = pg_query($connection, "select cliente_firstname, cliente_lastname, cliente_email from cliente WHERE cliente_id = {$_SESSION["user_logged_id"]}");
+                    $result = pg_fetch_all($result);
+                    foreach ($result as $linha) {
+                        echo "
+                        <form method='POST'>
+                            <li>First Name:</li>
+                            <li><input type='text' name='cliente_firstname' value='{$linha['cliente_firstname']}'/></li>
+                            <li>Second Name:</li>
+                            <li><input type='text' name='cliente_lastname' value='{$linha['cliente_lastname']}'/></li>
+                            <li>User Email:</li>
+                            <li><input type='text' name='cliente_email' value='{$linha['cliente_email']}'/></li>
+                            <li> <input type='submit' name='new' /></li>
+                        </form>";
                     }
-                    $rowResource = pg_query($connection, "SELECT * FROM cliente WHERE cliente_id = $SelectedClienteId");
-                    $USERNAME = pg_query($connection, "SELECT cliente_firstname FROM cliente WHERE cliente_id = $SelectedClienteId");
-                    $USERNAME1 = pg_fetch_result($USERNAME, 0, 0);
-                    $USERSECONDNAME = pg_query($connection, "SELECT cliente_lastname FROM cliente WHERE cliente_id = $SelectedClienteId");
-                    $USERSECONDNAME1 = pg_fetch_result($USERSECONDNAME, 0, 0);
-                    $USEREMAIL = pg_query($connection, "SELECT cliente_email FROM cliente WHERE cliente_id = $SelectedClienteId");
-                    $USEREMAIL1 = pg_fetch_result($USEREMAIL, 0, 0);
-                    echo"
-    <form method='POST'>
-    <li>First Name:</li>
-    <li><input type='text' name='cliente_firstname' value='$USERNAME1' /></li>
-    <li>Second Name:</li>
-    <li><input type='text' name='cliente_lastname' value='$USERSECONDNAME1' /></li>
-    <li>User Email:</li><li><input type='text' name='cliente_email' value='$USEREMAIL1' /></li>
-    <li> <input type='submit' name='new' /></li>
-    </form>";
+
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $var=$_GET['user'];
                         $USERNAMEUPDATE = $_POST["cliente_firstname"];
                         $USERLASTNAMEUPDATE = $_POST["cliente_lastname"];
                         $USEREMAILUPDATE = $_POST["cliente_email"];
                         $query ="UPDATE cliente 
                                  SET (cliente_firstname, cliente_lastname, cliente_password) = 
                                 ('$USERNAMEUPDATE','$USERLASTNAMEUPDATE','$USEREMAILUPDATE')
-                                WHERE cliente_id= '$SelectedClienteId' ";
+                                WHERE cliente_id= '{$_SESSION["user_logged_id"]}' ";
                         $result = pg_query($query);
 
                         if (!$result) {
                             echo "Update failed!!";
                         } else {
-                            header('Location: http://localhost:63342/SI_PROJECT/cliente/cliente_account-settings.php?id=' . $_GET['id']);
+                            header('Location: http://localhost:63342/SI_PROJECT/cliente/cliente_account-settings.php');
                             echo "Update successfull;";
                         }
 

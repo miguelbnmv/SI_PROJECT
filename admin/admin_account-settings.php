@@ -47,43 +47,39 @@
                 <div class="main_books">
                     <?php
                     include '../geral/server-connection.php';
-                    $SelectedAdminId =  $_GET['id'];
-                    $rowResource = pg_query($connection, "SELECT * FROM administrator WHERE admin_id = $SelectedAdminId");
-                    $ADMINNAME = pg_query($connection, "SELECT admin_name FROM administrator WHERE admin_id = $SelectedAdminId");
-                    $ADMINNAME1 = pg_fetch_result($ADMINNAME, 0, 0);
-                    $ADMINEMAIL = pg_query($connection, "SELECT admin_email FROM administrator WHERE admin_id = $SelectedAdminId");
-                    $ADMINEMAIL1 = pg_fetch_result($ADMINEMAIL, 0, 0);
-                    $ADMINPASS = pg_query($connection, "SELECT admin_password FROM administrator WHERE admin_id = $SelectedAdminId");
-                    $ADMINPASS1 = pg_fetch_result($ADMINPASS, 0, 0);
-                    echo"
-    <form method='POST'>
-    <li>Admin Name:</li>
-    <li><input type='text' name='admin_name' value='$ADMINNAME1' /></li>
-    <li>Admin Email:</li><li><input type='text' name='admin_email' value='$ADMINEMAIL1' /></li>
-    <li>Password:</li>
-    <li><input type='text' name='admin_password' value='$ADMINPASS1' /></li>
-    <li> <input type='submit' name='new' /></li>
-    </form>";
+                    $result = pg_query($connection, "select admin_name, admin_email, admin_password from administrator WHERE admin_id = {$_SESSION["admin_logged_id"]}");
+                    $result = pg_fetch_all($result);
+                    foreach ($result as $linha) {
+                        echo "
+                        <form method='POST'>
+                            <li>Admin Name:</li>
+                            <li><input type='text' name='admin_name' value='{$linha['admin_name']}' /></li>
+                            <li>Admin Email:</li>
+                            <li><input type='text' name='admin_email' value='{$linha['admin_email']}' /></li>
+                            <li>Password:</li>
+                            <li><input type='text' name='admin_password' value='{$linha['admin_password']}' /></li>
+                            <li> <input type='submit' name='new' /></li>
+                        </form>";
+                    }
+
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                        $var=$_GET['user'];
                         $ADMINNAMEUPDATE = $_POST["admin_name"];
                         $ADMINEMAILUPDATE = $_POST["admin_email"];
                         $ADMINPASSUPDATE = $_POST["admin_password"];
                         $query ="UPDATE administrator 
-        SET (admin_name, admin_email, admin_password) = 
-        ('$ADMINNAMEUPDATE','$ADMINEMAILUPDATE','$ADMINPASSUPDATE')
-        WHERE admin_id= '$SelectedAdminId' ";
+                                SET (admin_name, admin_email, admin_password) = 
+                                ('$ADMINNAMEUPDATE','$ADMINEMAILUPDATE','$ADMINPASSUPDATE')
+                                WHERE admin_id= {$_SESSION["admin_logged_id"]} ";
+
                         $result = pg_query($query);
 
                         if (!$result) {
                             echo "Update failed!!";
                         } else {
-                            header('Location: http://localhost:63342/SI_PROJECT/admin/admin_account-settings.php?id=' . $_GET['id']);
+                            header('Location: http://localhost:63342/SI_PROJECT/admin/admin_account-settings.php');
                             echo "Update successfull;";
                         }
-
                     }?>
-
                 </div>
             </div>
         </div>

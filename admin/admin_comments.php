@@ -52,10 +52,17 @@
                <?php
                include '../geral/server-connection.php';
                $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and livro_id={$_GET['id']}");
+               $result_count = pg_numrows($result);
                $result = pg_fetch_all($result);
-               foreach ($result as $linha)
+               if($result_count==0)
                {
-                   echo ("<div class=\"comment\">
+                   echo "Não há comentários";
+               }
+               else if ($result_count>0)
+               {
+                   foreach ($result as $linha)
+                   {
+                       echo ("<div class=\"comment\">
                     <div class=\"info\">
                         <h3>{$linha['cliente_firstname']}</h3>
                         <p class=\"comment_date\">{$linha['comment_date']}</p>
@@ -69,6 +76,7 @@
                         </form>
                     </div>
                 </div>");
+                   }
                }
                ?>
             </div>
@@ -78,11 +86,10 @@
 </html>
 <?php
 if (isset($_POST['submit'])) {
-    $query = "INSERT INTO comentarios values((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'),{$_GET['id']},'{$_POST['comment']}', current_timestamp)";
+    $query = "INSERT INTO comentarios values({$_SESSION["user_logged_id"]},{$_GET['id']},'{$_POST['comment']}', current_timestamp)";
     $result = pg_query($query);
 }
 if(isset($_POST['delete'])) {
-    echo"w";
+    echo"doesnt work";
 }
-
 ?>

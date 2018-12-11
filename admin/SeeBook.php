@@ -10,8 +10,7 @@
     <link rel="stylesheet" href="../assets/CSS/seeBook.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/catalog.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
 <section class="section section--white">
@@ -31,19 +30,18 @@
                             echo "<a href='../admin/admin_edit.php?id=" . $_GET['id'] . "'>
                                     <img src='../assets/images/edit.png'>
                                   </a>
-                        " ?>
-                        </div>
-                        <div class="col-xs-1 images">
-                            <a href="price_history.php">
-                                <img src="../assets/images/price.png">
-                            </a>
-                        </div>
-                        <div class="col-xs-3">
-                            <?php echo "
-                            <form action='../admin/admin_remove.php?id=" . $_GET['id'] . "' method='POST' id='formRemove'>
-                                <input type='submit' name='Submit' value=''/>
-                            </form>"
-                            ?>
+                        
+                                </div>
+                                <div class=\"col-xs-1 images\">
+                                    <a href='../admin/price_history.php?id=" . $_GET['id'] . "'>
+                                        <img src=\"../assets/images/price.png\">
+                                    </a>
+                                </div>
+                                <div class=\"col-xs-3\">
+                                    <form action='../admin/admin_remove.php?id=" . $_GET['id'] . "' method='POST' id='formRemove'>
+                                        <input type='submit' name='Submit' value=''/>
+                                    </form>"
+                                    ?>
                         </div>
             </div>
                 <div class="row middle-xs m-top">
@@ -123,6 +121,7 @@
                         <p>Favorites</p>
                         <div class="col-xs-9 book-info">
                             <p>Boo Title</p>
+
                         </div>
                     </div>
                     <div class="row middle-xs m-top">
