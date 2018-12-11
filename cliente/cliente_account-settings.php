@@ -31,6 +31,9 @@
     <div class="logout w-color">
         <a class="w-color" href="../geral/logout.php">Logout</a>
     </div>
+    <div class="w-color">
+        <a class="w-color" href="../cliente/cliente_account-collection.php">Coleção</a>
+    </div>
 </div>
 <section class="main">
     <div class="main_header">

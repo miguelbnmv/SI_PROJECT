@@ -61,6 +61,7 @@
                             <li> <input type='submit' name='new' /></li>
                         </form>";
                     }
+
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $ADMINNAMEUPDATE = $_POST["admin_name"];
                         $ADMINEMAILUPDATE = $_POST["admin_email"];
@@ -69,6 +70,7 @@
                                 SET (admin_name, admin_email, admin_password) = 
                                 ('$ADMINNAMEUPDATE','$ADMINEMAILUPDATE','$ADMINPASSUPDATE')
                                 WHERE admin_id= {$_SESSION["admin_logged_id"]} ";
+
                         $result = pg_query($query);
 
                         if (!$result) {

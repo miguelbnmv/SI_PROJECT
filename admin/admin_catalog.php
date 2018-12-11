@@ -29,7 +29,7 @@
         <input type="radio" name="radio">
         <span class="checkmark"></span>
         <?php echo "
-        <a href='../admin/admin_account-settings.php?id=" . $_GET['id'] . "'>hey2</a>"
+        <a href='../admin/admin_account-settings.php'>hey2</a>"
         ?>
     </label>
     <div class="logout w-color">

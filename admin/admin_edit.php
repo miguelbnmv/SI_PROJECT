@@ -18,19 +18,18 @@
 <?php
 include '../geral/server-connection.php';
 session_start();
-$SelectedBookId =$_GET['id'];
-$result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro WHERE book_id = $SelectedBookId");
+$result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro WHERE book_id = {$_GET['id']}");
 $result = pg_fetch_all($result);
 foreach ($result as $linha) {
     echo("
-     <form method='POST'>
-        <li>Book Name:</li>
-        <li><input type='text' name='book_name' value='{$linha['book_name']}' /></li>
-        <li>Price (USD):</li><li><input type='text' name='book_price' value='{$linha['book_price']}' /></li>
-        <li>Date of publication:</li>
-        <li><input type='text' name='book_date' value='{$linha['book_date']}' /></li>
-        <li> <input type='submit' name='new' /></li>
-     </form>
+         <form method='POST'  >
+            <li>Book Name:</li>
+            <li><input type='text' name='book_name' value='{$linha['book_name']}' /></li>
+            <li>Price (USD):</li><li><input type='text' name='book_price' value='{$linha['book_price']}' /></li>
+            <li>Date of publication:</li>
+            <li><input type='text' name='book_date' value='{$linha['book_date']}' /></li>
+            <li> <input type='submit' name='new' /></li>
+         </form>
     ");
 }
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -41,7 +40,7 @@ foreach ($result as $linha) {
         $query ="UPDATE livro 
         SET (book_name, book_price, book_date) = 
         ('$BOOKNAMEUPDATE','$BOOKPRICEUPDATE','$BOOKDATEUPDATE')
-        WHERE book_id= '$SelectedBookId' ";
+        WHERE book_id= '{$_GET['id']}' ";
 
         $result = pg_query($query);
 
@@ -52,6 +51,7 @@ foreach ($result as $linha) {
             echo "Update failed!!";
         } else {
             echo "Update successfull;";
+            header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php');
         }
 }?>
     </div>

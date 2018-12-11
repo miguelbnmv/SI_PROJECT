@@ -22,7 +22,7 @@ $result = pg_query($connection, "select book_name, book_price, book_publisher, b
 $result = pg_fetch_all($result);
 
 foreach ($result as $linha) {
-    echo("
+    echo "
    
         <p class=\"sidebar_title\">This is the <strong>{$linha['book_name']}</strong></p>
         <p class=\"\">The author is <strong>{$linha['book_author']}</strong></p>
@@ -31,7 +31,7 @@ foreach ($result as $linha) {
         <p class=\"\">The book ID is <strong>{$_GET['id']}</strong></p>
     <a href='../cliente/cliente_account-favorites.php?id' > oi mano fav</a>
   
-                ");
+                ";
         }
     ?>
 </div>
@@ -115,7 +115,7 @@ foreach ($result as $linha) {
                 $avg = $total / count($ratings);
                 echo "<p>A média é $avg</p>";
             }
-            //Show comments
+            //Show comments -- MUDA O LIVRO_ID PARA BOOK_ID
             $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and livro_id={$_GET['id']}");
             $result_count = pg_numrows($result);
             $result = pg_fetch_all($result);
@@ -127,7 +127,7 @@ foreach ($result as $linha) {
             {
                 foreach ($result as $linha)
                 {
-                    echo ("<div class=\"comment\">
+                    echo"<div class=\"comment\">
                             <div class=\"info\">
                                 <h3>{$linha['cliente_firstname']}</h3>
                                 <p class=\"comment_date\">{$linha['comment_date']}</p>
@@ -140,7 +140,7 @@ foreach ($result as $linha) {
                                     <input type=\"submit\" value=\"Delete\" name=\"delete\" alt=\"Delete_Comment\" />
                                 </form>
                             </div>
-                        </div>");
+                        </div>";
                 }
             }
             ?>
@@ -154,6 +154,50 @@ foreach ($result as $linha) {
             $favoritecount2 = pg_numrows($favoritecount);
             echo "numero de pessoas que favoritaram $favoritecount2";
             ?>
+
+    </div>
+    <div class="book">
+        <form method="POST">
+            <input id='comprar' type="submit" class="button" name="comprar" value="" >  comprar </input>
+        </form>
+        <?php
+        if (isset($_POST['comprar'])) {
+
+            {/*
+            $compra_cliente_id = pg_query($connection, "select cliente_id from compra where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
+            $compra_cliente_id2 = pg_fetch_result($compra_cliente_id, 0, 0);
+            $cliente_id = pg_query($connection, "select cliente_id from cliente where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
+            $cliente_id2 = pg_fetch_result($compra_cliente_id, 0, 0);
+            $compra_livro_id = pg_query($connection, "select book_id from compra where book_id = '{$_GET['id']}'");
+            $compra_livro_id2 = pg_fetch_result($compra_livro_id, 0, 0);
+            $livro_id = pg_query($connection, "select book_id from livro where book_id = '{$_GET['id']}'");
+            $livro_id2 = pg_fetch_result($livro_id, 0, 0);
+
+          if ($compra_cliente_id2 == $cliente_id2 and $compra_livro_id2== $livro_id2) {*/}
+
+                $query = "INSERT INTO compra  values((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'),'{$_GET['id']}',(select book_price from livro where book_id='{$_GET['id']}'),current_timestamp)";
+                $result = pg_query($query);
+                $cliente_balace = pg_query($connection, "select cliente_balance from cliente where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
+                $cliente_balace2 = pg_fetch_result($cliente_balace, 0, 0);
+                $book_price = pg_query($connection, "select transaction_price from compra where book_id = '{$_GET['id']}'");
+                $book_price2 = pg_fetch_result($book_price, 0, 0);
+                $cliente_balaceUpdate = ($cliente_balace2) - ($book_price2);
+                if ($cliente_balace2 < $book_price2) {
+                    echo "You dont have money. Go check your account balance!";
+                }
+                if ($cliente_balace2 >= $book_price2) {
+                    $query2 = "UPDATE cliente 
+            SET cliente_balance = '$cliente_balaceUpdate'
+            WHERE  cliente_id= (select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')";
+                    $result2 = pg_query($query2);
+                    if (!$result2) {
+                        echo "Update failed!!";
+                    } else {
+                        echo "Update successfull;";
+                    }
+                }
+        }
+        ?>
 
     </div>
 </section>
