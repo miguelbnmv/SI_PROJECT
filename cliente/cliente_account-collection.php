@@ -31,11 +31,10 @@
     <div class="logout w-color">
         <a class="w-color" href="../geral/logout.php">Logout</a>
     </div>
-    <a class="w-color" href="../cliente/cliente_account-collection.php">Coleção</a>
 </div>
 <section class="main">
     <div class="main_header">
-        <h1>Favorite Books</h1>
+        <h1>Collection</h1>
     </div>
     <?php
     include '../geral/header.php';
@@ -48,7 +47,7 @@
 
                 <div class="main-container">
                     <?php
-                    $result = pg_query($connection, "SELECT livro.book_id,favorite.book_id, book_name, book_price FROM livro,favorite WHERE favorite.book_id = livro.book_id and favorite=true and cliente_id=((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'))");
+                    $result = pg_query($connection, "SELECT livro.book_id,compra.book_id, book_name, book_price FROM livro,compra WHERE compra.book_id = livro.book_id and cliente_id=((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'))");
                     $result = pg_fetch_all($result);
                     foreach ($result as $linha)
                     {

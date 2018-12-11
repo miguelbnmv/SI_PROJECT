@@ -26,7 +26,7 @@ $result = pg_fetch_all($result);
 
 foreach ($result as $linha) {
     echo("
-     <form method='POST' action='admin/admin_edit.php' >
+     <form method='POST'  >
         <li>Book Name:</li>
         <li><input type='text' name='book_name' value='{$linha['book_name']}' /></li>
         <li>Price (USD):</li><li><input type='text' name='book_price' value='{$linha['book_price']}' /></li>
@@ -46,12 +46,11 @@ foreach ($result as $linha) {
         ('$BOOKNAMEUPDATE','$BOOKPRICEUPDATE','$BOOKDATEUPDATE')
         WHERE book_id= '$SelectedBookId' ";
         $result = pg_query($query);
-
         if (!$result) {
             echo "Update failed!!";
         } else {
             echo "Update successfull;";
-            header('Location: http://localhost:63342/SI_PROJECT/admin/SeeBook.php?id='. $SelectedBookId);
+            header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php');
         }
 }?>
     </div>

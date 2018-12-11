@@ -47,7 +47,11 @@
                 <div class="main_books">
                     <?php
                     include '../geral/server-connection.php';
-                    $SelectedAdminId =  $_GET['id'];
+                    $query = pg_query($connection,"select admin_id from administrator where admin_email='{$_SESSION['logged']}'");
+                    $result = pg_fetch_all($query);
+                    foreach($result as $linha) {
+                        $SelectedAdminId =  $linha['admin_id'];
+                    }
                     $rowResource = pg_query($connection, "SELECT * FROM administrator WHERE admin_id = $SelectedAdminId");
                     $ADMINNAME = pg_query($connection, "SELECT admin_name FROM administrator WHERE admin_id = $SelectedAdminId");
                     $ADMINNAME1 = pg_fetch_result($ADMINNAME, 0, 0);
@@ -57,11 +61,11 @@
                     $ADMINPASS1 = pg_fetch_result($ADMINPASS, 0, 0);
                     echo"
     <form method='POST'>
-    <li>Admin Name:</li>
+    <li>First Name:</li>
     <li><input type='text' name='admin_name' value='$ADMINNAME1' /></li>
-    <li>Admin Email:</li><li><input type='text' name='admin_email' value='$ADMINEMAIL1' /></li>
-    <li>Password:</li>
-    <li><input type='text' name='admin_password' value='$ADMINPASS1' /></li>
+    <li>Second Name:</li>
+    <li><input type='text' name='admin_email' value='$ADMINEMAIL1' /></li>
+    <li>User Email:</li><li><input type='text' name='admin_password' value='$ADMINPASS1' /></li>
     <li> <input type='submit' name='new' /></li>
     </form>";
                     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -69,10 +73,10 @@
                         $ADMINNAMEUPDATE = $_POST["admin_name"];
                         $ADMINEMAILUPDATE = $_POST["admin_email"];
                         $ADMINPASSUPDATE = $_POST["admin_password"];
-                        $query ="UPDATE administrator 
-        SET (admin_name, admin_email, admin_password) = 
-        ('$ADMINNAMEUPDATE','$ADMINEMAILUPDATE','$ADMINPASSUPDATE')
-        WHERE admin_id= '$SelectedAdminId' ";
+                        $query ="UPDATE  administrator
+                                 SET (admin_name, admin_email, admin_password) = 
+                                ('$ADMINNAMEUPDATE','$ADMINEMAILUPDATE','$ADMINPASSUPDATE')
+                                WHERE admin_id= '$SelectedAdminId' ";
                         $result = pg_query($query);
 
                         if (!$result) {
