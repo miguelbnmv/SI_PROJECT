@@ -90,13 +90,12 @@
           if (!$result) {
               die("Error in SQL query: " . pg_last_error());
           }
-          foreach ($resultall as $linhas) {
+          foreach ($resultall as $linha) {
           echo "
                   <div class=\"book\">
-    
-                          <img src=\" ../assets/covers/{$linhas['book_cover']}\">
-                          <p class=\"book_title\">{$linhas['book_name']}</p>
-                          <p class=\"book_price\">{$linhas['book_price']}€</p>
+                      <img src=\" ../assets/covers/{$linha['book_cover']}\">
+                      <p class=\"book_title\">{$linhas['book_name']}</p>
+                      <p class=\"book_price\">{$linhas['book_price']}€</p>
                   </div>
          ";
           }
@@ -115,23 +114,52 @@
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);
             foreach ($result as $linha)
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra");
+            $Book_comprado1 = pg_fetch_result($Book_comprado,0,0);
             {
-                echo "
+                if ( "{$linha['book_id']}" == $Book_comprado1) {
+                    echo "
+                    <div class=\"book\">
+          <a href='user_book_b.php?id={$linha['book_id']}'>
+                          <img src=\"../assets/images/cover.jpg\">
+                          <p class=\"book_title\">{$linha['book_name']}</p>
+                          <p class=\"book_price\">{$linha['book_price']}€</p>
+                        </a>
+                    </div> 
+            ";
+                }
+                else{
+                    echo "
                     <div class=\"book\">
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
                           <img src=\" ../assets/covers/{$linha['book_cover']}\">
                           <p class=\"book_title\">{$linha['book_name']}</p>
                           <p class=\"book_price\">{$linha['book_price']}€</p>
                         </a>
-                    </div>
+                    </div> 
             ";
+
+                }
             }
         } else {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro");
             $result = pg_fetch_all($result);
-            foreach ($result as $linha)
-            {
-               echo "
+            foreach ($result as $linha) {
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra");
+                $Book_comprado1 = pg_fetch_result($Book_comprado,0,0);
+                if ( "{$linha['book_id']}" == $Book_comprado1) {
+                    echo "
+                    <div class=\"book\">
+                      <a href='user_book_b.php?id={$linha['book_id']}'>
+                          <img src=\"../assets/images/cover.jpg\">
+                          <p class=\"book_title\">{$linha['book_name']}</p>
+                          <p class=\"book_price\">{$linha['book_price']}€</p>
+                        </a>
+                    </div> 
+            ";
+                }
+                else{
+                    echo "
                     <div class=\"book\">
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
                           <img src=\"../assets/covers/{$linha['book_cover']}\">
@@ -140,6 +168,8 @@
                         </a>
                     </div> 
             ";
+
+                }
             }
         }
         ?>

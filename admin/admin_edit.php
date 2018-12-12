@@ -32,27 +32,35 @@ foreach ($result as $linha) {
          </form>
     ");
 }
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $BOOKNAMEUPDATE = $_POST["book_name"];
         $BOOKPRICEUPDATE = $_POST["book_price"];
         $BOOKDATEUPDATE = $_POST["book_date"];
-
-        $query ="UPDATE livro 
+        $searchbookId = pg_query($connection, "SELECT book_id FROM view_history WHERE book_id = {$_GET['id']}");
+        $searchbookId2 = pg_numrows($searchbookId);
+        if ($searchbookId2 > 0 ) {
+            echo "already saw, you cant edit";
+        }
+    else {
+        $query = "UPDATE livro 
         SET (book_name, book_price, book_date) = 
         ('$BOOKNAMEUPDATE','$BOOKPRICEUPDATE','$BOOKDATEUPDATE')
         WHERE book_id= '{$_GET['id']}' ";
 
-        $result = pg_query($query);
+    $result = pg_query($query);
 
-        $query2 ="INSERT INTO price_history values({$_GET['id']},{$_SESSION["admin_logged_id"]},'{$_POST["book_price"]}',CURRENT_TIMESTAMP)";
-        $result2 = pg_query($query2);
+    $query2 = "INSERT INTO price_history values({$_GET['id']},{$_SESSION["admin_logged_id"]},'{$_POST["book_price"]}',CURRENT_TIMESTAMP)";
+    $result2 = pg_query($query2);
 
-        if (!$result) {
-            echo "Update failed!!";
-        } else {
-            echo "Update successfull;";
-            header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php');
-        }
+    if (!$result) {
+        echo "Update failed!!";
+    } else {
+        echo "Update successfull;";
+        header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php');
+    }
+}
+
 }?>
     </div>
 </section>

@@ -15,14 +15,14 @@
 </head>
 <body>
 <div id="mySidenav" class="sidenav w-color">
-<?php
-//Show
-include '../geral/server-connection.php';
-$result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description, book_cover from livro where book_id = {$_GET['id']}");
-$result = pg_fetch_all($result);
+    <?php
+    //Show
+    include '../geral/server-connection.php';
+    $result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro where book_id = {$_GET['id']}");
+    $result = pg_fetch_all($result);
 
-foreach ($result as $linha) {
-    echo "
+    foreach ($result as $linha) {
+        echo "
    
         <p class=\"sidebar_title\">This is the <strong>{$linha['book_name']}</strong></p>
         <p class=\"\">The author is <strong>{$linha['book_author']}</strong></p>
@@ -32,7 +32,7 @@ foreach ($result as $linha) {
     <a href='../cliente/cliente_account-favorites.php?id' > oi mano fav</a>
   
                 ";
-        }
+    }
     ?>
 </div>
 <section class="main">
@@ -49,18 +49,15 @@ foreach ($result as $linha) {
                 </div>
             </form>
         </div>
-    <?php
-            include '../geral/server-connection.php';
-
-
-            echo"
+        <?php
+        include '../geral/server-connection.php';
+        echo"
                 <div>
-                    <img src=\" ../assets/covers/{$linha['book_cover']}\">
-                    <p class=\"\">Description <strong>{$linha['book_description']}</strong></p>
+                    <p class=\"\">Description <stron g>{$linha['book_description']}</strong></p>
                     <p class=\"\">Price <strong>{$linha['book_price']}</strong></p>
                 </div>
                 <form method=\"POST\" id=\"formCreateComment\">
-        
+                  
                   <input aria-flowto=\"rating2\" class=\"rating__input\" type=\"radio\" name=\"rating\" value=\"1\" id=\"rating1\" aria-flowto=\"rating2\">
                   <label class=\"rating__label\" for=\"rating1\">☆
                     <span class=\"rating__star\">1 Stars</span> 
@@ -89,48 +86,48 @@ foreach ($result as $linha) {
                  </form>
            
         <div class=\"main_comments\">";
-            //Insert or Update rating
-            if(isset($_POST["submit_rating"])) {
-                $all_ratings = pg_query($connection,"select * from rating where cliente_id={$_SESSION['user_logged_id']}");
-                $all_ratings2 = pg_numrows($all_ratings);
-                if($all_ratings2==0) {
-                    $query = "INSERT INTO rating values({$_SESSION['user_logged_id']},{$_GET['id']},{$_POST["rating"]})";
-                    $result = pg_query($query);
-                } else {
-                    $query = "UPDATE rating SET rating = {$_POST["rating"]} where cliente_id={$_SESSION['user_logged_id']}";
-                    $result = pg_query($query);
-                }
+        //Insert or Update rating
+        if(isset($_POST["submit_rating"])) {
+            $all_ratings = pg_query($connection,"select * from rating where cliente_id={$_SESSION['user_logged_id']}");
+            $all_ratings2 = pg_numrows($all_ratings);
+            if($all_ratings2==0) {
+                $query = "INSERT INTO rating values({$_SESSION['user_logged_id']},{$_GET['id']},{$_POST["rating"]})";
+                $result = pg_query($query);
+            } else {
+                $query = "UPDATE rating SET rating = {$_POST["rating"]} where cliente_id={$_SESSION['user_logged_id']}";
+                $result = pg_query($query);
             }
+        }
 
-            //Rating Average
-            $result = pg_query($connection, "select rating from rating where book_id='{$_GET['id']}'");
-            $result_count = pg_numrows($result);
-            $ratings = pg_fetch_all($result);
-            $total=0;
-            if($result_count==0)
-            {
-                echo "Ninguém fez rating";
+        //Rating Average
+        $result = pg_query($connection, "select rating from rating where book_id='{$_GET['id']}'");
+        $result_count = pg_numrows($result);
+        $ratings = pg_fetch_all($result);
+        $total=0;
+        if($result_count==0)
+        {
+            echo "Ninguém fez rating";
+        }
+        else if ($result_count>0) {
+            foreach ($ratings as $linha) {
+                $total = $total + $linha['rating'];
             }
-            else if ($result_count>0) {
-                foreach ($ratings as $linha) {
-                    $total = $total + $linha['rating'];
-                }
-                $avg = $total / count($ratings);
-                echo "<p>A média é $avg</p>";
-            }
-            //Show comments -- MUDA O LIVRO_ID PARA BOOK_ID
-            $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and book_id={$_GET['id']}");
-            $result_count = pg_numrows($result);
-            $result = pg_fetch_all($result);
-            if($result_count==0)
+            $avg = $total / count($ratings);
+            echo "<p>A média é $avg</p>";
+        }
+        //Show comments -- MUDA O LIVRO_ID PARA BOOK_ID
+        $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and book_id={$_GET['id']}");
+        $result_count = pg_numrows($result);
+        $result = pg_fetch_all($result);
+        if($result_count==0)
+        {
+            echo "</br>Não há comentários";
+        }
+        else if ($result_count>0)
+        {
+            foreach ($result as $linha)
             {
-                echo "</br>Não há comentários";
-            }
-            else if ($result_count>0)
-            {
-                foreach ($result as $linha)
-                {
-                    echo"<div class=\"comment\">
+                echo"<div class=\"comment\">
                             <div class=\"info\">
                                 <h3>{$linha['cliente_firstname']}</h3>
                                 <p class=\"comment_date\">{$linha['comment_date']}</p>
@@ -144,50 +141,19 @@ foreach ($result as $linha) {
                                 </form>
                             </div>
                         </div>";
-                }
             }
-            ?>
-        </div>
-        <div class="book">
-            <form method="POST">
-                <input id='fav' type="submit" class="button" name="insert" value="" src="../assets/images/like.png" onclick="change_background" >♡ </input>
-            </form>
-
-            <?php
-            $favoritecount = pg_query($connection,"select * from favorite where book_id={$_GET['id']} and favorite = true");
-            $favoritecount2 = pg_numrows($favoritecount);
-            echo "numero de pessoas que favoritaram $favoritecount2";
-            ?>
-
+        }
+        ?>
     </div>
     <div class="book">
         <form method="POST">
-            <input id='comprar' type="submit" class="button" name="comprar" value="" >  comprar </input>
+            <input id='fav' type="submit" class="button" name="insert" value="" src="../assets/images/like.png" onclick="change_background" >♡ </input>
         </form>
+
         <?php
-        if (isset($_POST['comprar'])) {
-                $query = "INSERT INTO compra  values((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'),'{$_GET['id']}',(select book_price from livro where book_id='{$_GET['id']}'),current_timestamp)";
-                $result = pg_query($query);
-                $cliente_balace = pg_query($connection, "select cliente_balance from cliente where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
-                $cliente_balace2 = pg_fetch_result($cliente_balace, 0, 0);
-                $book_price = pg_query($connection, "select transaction_price from compra where book_id = '{$_GET['id']}'");
-                $book_price2 = pg_fetch_result($book_price, 0, 0);
-                $cliente_balaceUpdate = ($cliente_balace2) - ($book_price2);
-                if ($cliente_balace2 < $book_price2) {
-                    echo "You dont have money. Go check your account balance!";
-                }
-                if ($cliente_balace2 >= $book_price2) {
-                    $query2 = "UPDATE cliente 
-            SET cliente_balance = '$cliente_balaceUpdate'
-            WHERE  cliente_id= (select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')";
-                    $result2 = pg_query($query2);
-                    if (!$result2) {
-                        echo "Update failed!!";
-                    } else {
-                        echo "Update successfull;";
-                    }
-                }
-        }
+        $favoritecount = pg_query($connection,"select * from favorite where book_id={$_GET['id']} and favorite = true");
+        $favoritecount2 = pg_numrows($favoritecount);
+        echo "numero de pessoas que favoritaram $favoritecount2";
         ?>
 
     </div>
@@ -207,23 +173,20 @@ if(isset($_POST["insert"])) {
         $query = "INSERT INTO favorite  values ({$_SESSION["user_logged_id"]},{$_GET['id']}, false )";
         $result = pg_query($query);
     } if($all_fav2!=0)
-        {
-    $query2 ="UPDATE favorite 
+    {
+        $query2 ="UPDATE favorite 
     SET favorite = NOT favorite
     WHERE book_id= '{$_GET['id']}' and cliente_id= {$_SESSION["user_logged_id"]}";
-    $result2 = pg_query($query2);
-    if (!$result2) {
-        echo "Update failed!!";
-    } else {
-        echo "Update successfull;";
-    }
+        $result2 = pg_query($query2);
+        if (!$result2) {
+            echo "Update failed!!";
+        } else {
+            echo "Update successfull;";
+        }
     }
 }
 
-$query2 ="INSERT INTO view_history values({$_SESSION["user_logged_id"]}, {$_GET['id']},CURRENT_TIMESTAMP)";
-$result2 = pg_query($query2);
 ?>
-
 <script>
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );
