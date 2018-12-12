@@ -57,6 +57,7 @@
 </section>
 </body>
 <?php
+
 include '../geral/server-connection.php';
 if(isset($_POST["email"]) || isset($_POST["password"])) {
     $USEREMAIL = $_POST["email"];
@@ -74,6 +75,7 @@ if(isset($_POST["email"]) || isset($_POST["password"])) {
         echo("erro");
     }
 }
+
 ?>
 </html>
 

@@ -15,7 +15,10 @@
 <body>
     <?php
     session_start();
-    echo("<p class='name'><strong>Hi</strong> {$_SESSION['logged']}</p>");
-    ?>
+    echo("<p class='name'><strong> Hi </strong>{$_SESSION['logged']}</p>");
+    include '../geral/server-connection.php';
+
+
+?>
 </body>
 </html>

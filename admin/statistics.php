@@ -60,14 +60,25 @@
             </div>
             <div class='card'>
             <p>$rowCountauthor different authors</p>
-            </div>
+            </div> ";
+            $ClientId = pg_query($connection, "SELECT * FROM cliente");
+            $rowCountClient =  pg_num_rows($ClientId);
+            $TotalComprado = pg_query($connection, "SELECT transaction_price FROM compra");
+            $TotalComprado2 = pg_fetch_all($TotalComprado);
+            $total=0;
+            foreach ($TotalComprado2 as $linha)
+            {
+                $total = $total + $linha['transaction_price'];
+                }
+            $avg = $total / $rowCountClient;
+            echo "
             <div class='card'>
-            <p>$login_session_duration</p>
+            <p>Value that each user spends, on average, on the website $avg </p>
             </div>
             <div class='card'>
 
             </div>
-            "?>
+           "?>
 
         </div>
     </div>
