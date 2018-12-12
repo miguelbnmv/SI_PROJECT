@@ -28,9 +28,7 @@
     <label class="check_container">Edit Account Settings
         <input type="radio" name="radio">
         <span class="checkmark"></span>
-        <?php /*echo "
-        <a href='../admin/admin_account-settings.php?id=" . $_GET['id'] . "'>hey2</a>"
-        */?>
+        <a href='../admin/admin_account-settings.php?id'>hey2</a>
     </label>
     <div class="logout w-color">
         <a class="w-color" href="../geral/logout.php">Logout</a>
@@ -50,7 +48,10 @@
             $result = pg_query($connection, "select admin_id, book_id, price_update, price_date from price_history where book_id={$_GET['id']}");
             $result_count = pg_numrows($result);
             $result = pg_fetch_all($result);
-            echo"
+            if($result_count==0) {
+                echo "<p>O preço nunca foi modificado</p>";
+            } else if ($result_count>0) {
+                echo"
                 <table>
                   <tr>
                     <th>Admin</th>
@@ -58,16 +59,6 @@
                     <th>Date</th>
                   </tr>
                   ";
-            if($result_count==0) {
-                echo "               
-                      <tr>
-                        <td>nop</td>
-                        <td>nop</td>
-                        <td>nop</td>
-                      </tr>
-                    </table>
-                    ";
-            } else if ($result_count>0) {
                 foreach ($result as $linha) {
                     echo "               
                       <tr>

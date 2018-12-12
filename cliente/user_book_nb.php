@@ -18,7 +18,7 @@
 <?php
 //Show
 include '../geral/server-connection.php';
-$result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro where book_id = {$_GET['id']}");
+$result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description, book_cover from livro where book_id = {$_GET['id']}");
 $result = pg_fetch_all($result);
 
 foreach ($result as $linha) {
@@ -53,7 +53,8 @@ foreach ($result as $linha) {
             include '../geral/server-connection.php';
             echo"
                 <div>
-                    <p class=\"\">Description <stron g>{$linha['book_description']}</strong></p>
+                    <img src=\" ../assets/covers/{$linha['book_cover']}\">
+                    <p class=\"\">Description <strong>{$linha['book_description']}</strong></p>
                     <p class=\"\">Price <strong>{$linha['book_price']}</strong></p>
                 </div>
                 <form method=\"POST\" id=\"formCreateComment\">
@@ -162,19 +163,6 @@ foreach ($result as $linha) {
         </form>
         <?php
         if (isset($_POST['comprar'])) {
-
-            {/*
-            $compra_cliente_id = pg_query($connection, "select cliente_id from compra where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
-            $compra_cliente_id2 = pg_fetch_result($compra_cliente_id, 0, 0);
-            $cliente_id = pg_query($connection, "select cliente_id from cliente where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
-            $cliente_id2 = pg_fetch_result($compra_cliente_id, 0, 0);
-            $compra_livro_id = pg_query($connection, "select book_id from compra where book_id = '{$_GET['id']}'");
-            $compra_livro_id2 = pg_fetch_result($compra_livro_id, 0, 0);
-            $livro_id = pg_query($connection, "select book_id from livro where book_id = '{$_GET['id']}'");
-            $livro_id2 = pg_fetch_result($livro_id, 0, 0);
-
-          if ($compra_cliente_id2 == $cliente_id2 and $compra_livro_id2== $livro_id2) {*/}
-
                 $query = "INSERT INTO compra  values((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'),'{$_GET['id']}',(select book_price from livro where book_id='{$_GET['id']}'),current_timestamp)";
                 $result = pg_query($query);
                 $cliente_balace = pg_query($connection, "select cliente_balance from cliente where cliente_id=(select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')");
@@ -229,7 +217,10 @@ if(isset($_POST["insert"])) {
     }
 }
 
+$query2 ="INSERT INTO view_history values({$_SESSION["user_logged_id"]}, {$_GET['id']},CURRENT_TIMESTAMP)";
+$result2 = pg_query($query2);
 ?>
+
 <script>
     if ( window.history.replaceState ) {
         window.history.replaceState( null, null, window.location.href );

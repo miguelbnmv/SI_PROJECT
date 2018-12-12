@@ -94,7 +94,7 @@
           echo "
                   <div class=\"book\">
     
-                          <img src=\" ../assets/images/cover.jpg\">
+                          <img src=\" ../assets/covers/{$linhas['book_cover']}\">
                           <p class=\"book_title\">{$linhas['book_name']}</p>
                           <p class=\"book_price\">{$linhas['book_price']}€</p>
                   </div>
@@ -112,14 +112,14 @@
         <?php
         include '../geral/server-connection.php';
         if(isset($_POST["submit_order"])) {
-            $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date FROM livro order by {$_POST["order"]}");
+            $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);
             foreach ($result as $linha)
             {
                 echo "
                     <div class=\"book\">
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/images/cover.jpg\">
+                          <img src=\" ../assets/covers/{$linha['book_cover']}\">
                           <p class=\"book_title\">{$linha['book_name']}</p>
                           <p class=\"book_price\">{$linha['book_price']}€</p>
                         </a>
@@ -127,14 +127,14 @@
             ";
             }
         } else {
-            $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date FROM livro");
+            $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro");
             $result = pg_fetch_all($result);
             foreach ($result as $linha)
             {
                echo "
                     <div class=\"book\">
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/images/cover.jpg\">
+                          <img src=\"../assets/covers/{$linha['book_cover']}\">
                           <p class=\"book_title\">{$linha['book_name']}</p>
                           <p class=\"book_price\">{$linha['book_price']}€</p>
                         </a>

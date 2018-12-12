@@ -28,9 +28,7 @@
     <label class="check_container">Edit Account Settings
         <input type="radio" name="radio">
         <span class="checkmark"></span>
-        <?php echo "
-        <a href='../admin/admin_account-settings.php'>hey2</a>"
-        ?>
+        <a href='../admin/admin_account-settings.php'>hey2</a>
     </label>
     <div class="logout w-color">
         <a class="w-color" href="../geral/logout.php">Logout</a>

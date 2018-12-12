@@ -17,7 +17,7 @@
 <body>
 <section class="section section--white">
     <div class="container container-fluid">
-        <div class="row middle-xs ">
+        <div class="row middle-xs">
                  <h1>Add Book </h1>
                 <?php
                 include '../geral/header.php';
@@ -26,59 +26,59 @@
         <div class=" row center-xs middle-xs">
             <div class="add-card">
             <div class="col-xs-12">
-            <form action="admin_add.php" method="POST" id="formAdd">
-                <div class="row middle-xs  ">
+            <form action="admin_add.php" method="POST" id="formAdd" enctype='multipart/form-data'>
+                <div class="row middle-xs">
                     <div class="col-xs-12">
-                        <input name="title" type="text" placeholder="Book Title"/>
+                        <input name="title" type="text" placeholder="Book Title" required/>
                     </div>
                 </div>
                 <div class="row middle-xs ">
                     <div class="col-xs-12">
-                        <input name="author" type="text" placeholder="Author"/>
+                        <input name="author" type="text" placeholder="Author" required/>
+                    </div>
+                </div>
+                <div class="row middle-xs">
+                    <div class="col-xs-12">
+                        <input name="publisher" type="text" placeholder="Publishing Company" required/>
                     </div>
                 </div>
                 <div class="row middle-xs ">
                     <div class="col-xs-12">
-                        <input name="publisher" type="text" placeholder="Publishing Company"/>
+                        <input name="date" type="date" placeholder="Date" required/>
                     </div>
                 </div>
-                <div class="row middle-xs ">
+                <div class="row middle-xs">
                     <div class="col-xs-12">
-                        <input name="date" type="date" placeholder="Date"/>
+                        <input name="price" type="number" placeholder="Price" required/>
                     </div>
                 </div>
-                <div class="row middle-xs ">
+                <div class="row middle-xs">
                     <div class="col-xs-12">
-                        <input name="price" type="number" placeholder="Price"/>
+                        <textarea required name="description" placeholder="Write book details..."></textarea>
                     </div>
                 </div>
-                <div class="row middle-xs ">
-                    <div class="col-xs-12">
-                        <textarea name="description" type="text" placeholder="Write book details..."></textarea>
-                    </div>
-                </div>
-                <div class="row middle-xs ">
+                <div class="row middle-xs">
                     <div class="col-xs-3">
-                        <div class="upload-btn-wrapper">
-                            <button class="btn">Upload a file</button>
-                            <input type="file" name="myfile" />
-                        </div>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="upload-btn-wrapper">
-                            <button class="btn">Upload a file</button>
-                            <input type="file" name="myfile" />
-                        </div>
-                    </div>
-                    <div class="col-xs-3">
-                        <input type="submit" name="Submit" value="Add Book" placeholder="Add Book"/>
-                    </div>
-                </div>
-            </form>
-            </div>
-            </div>
-        </div>
-    </div>
-</section>
-</body>
-</html>
+<!--                    <div class="upload-btn-wrapper">-->
+<!--                        <button class="btn">Upload the cover</button>-->
+                            <input type="file" accept="image/png, image/jpeg" name="myCover" required/>
+                        <!--</div>-->
+                         </div>
+                         <div class="col-xs-3">
+                             <!--<div class="upload-btn-wrapper">-->
+                                 <!--<button class="btn">Upload the text file</button>-->
+                                 <input type="file" accept=".pdf" name="myText" required/>
+                             <!--</div>-->
+                         </div>
+                         <div class="col-xs-3">
+                             <input type="submit" name="Submit" value="Add Book" placeholder="Add Book"/>
+                         </div>
+                     </div>
+                 </form>
+                 </div>
+                 </div>
+             </div>
+         </div>
+     </section>
+     </body>
+     </html>
