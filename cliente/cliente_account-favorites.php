@@ -29,9 +29,9 @@
         <span class="checkmark"></span>
     </label>
     <div class="logout w-color">
-        <a class="w-color" href="../geral/logout.php">Logout</a>
+        <a class="w-color" href="../geral/logout.php"><p>Logout</p></a>
     </div>
-    <a class="w-color" href="../cliente/cliente_account-collection.php">Coleção</a>
+    <a class="w-color" href="../cliente/cliente_account-collection.php"><p>Coleção</p></a>
 </div>
 <section class="main">
     <div class="main_header">
@@ -43,8 +43,8 @@
     ?>
     <div class="row">
         <div class="col-xs-10">
-            <section class="main">
-                <div class="main-container">
+            <section class="main-container">
+                <div class="main_books">
                     <?php
                     $result = pg_query($connection, "SELECT livro.book_id, favorite.book_id, book_name, book_price FROM livro,favorite WHERE favorite.book_id = livro.book_id and favorite=true and cliente_id={$_SESSION["user_logged_id"]}");
                     $result_count = pg_numrows($result);
@@ -55,13 +55,16 @@
                     else if ($result_count>0) {
                         foreach ($result as $linha) {
                             echo "
-                             <div class=\"book\">
-                                  <a href='user_book_nb.php?id={$linha['book_id']}'>
-                                     <p class=\"book_title\">{$linha['book_name']}</p>
-                                     <p class=\"book_title\">{$linha['book_price']}</p>
-                                   </a>
-                             </div>
-                      ";
+                                 <a class='book' href='user_book_nb.php?id={$linha['book_id']}'>
+                                      <div>
+                                          <p class='book_title'>{$linha['book_name']}</p>
+                                          <p class='book_price'>{$linha['book_price']}$</p>
+                                      </div>
+                                      <div>
+                                          <p class='book_id'>{$linha['book_id']}</p>
+                                      </div>
+                                 </a>
+                            ";
                         }
                     }
                     ?>

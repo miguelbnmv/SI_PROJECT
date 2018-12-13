@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="../assets/CSS/statistics.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/catalog_admin.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
 <div id="mySidenav" class="sidenav w-color">
-    <p class="sidebar_title"><strong>Hi</strong> Admin</p>
+    <h1 class="sidebar_title"><strong>Hi</strong> Admin</h1>
     <label class="check_container">Catalog
         <input type="radio"  name="radio">
         <span class="checkmark"></span>
@@ -28,8 +28,8 @@
         <input type="radio" name="radio">
         <span class="checkmark"></span>
     </label>
-    <div class="logout w-color">
-        <a class="w-color" href="../geral/logout.php">Logout</a>
+    <div class="logout">
+        <a class="w-color" href="../geral/logout.php"><p>Logout</p></a>
     </div>
 </div>
 <section class="main">
@@ -42,26 +42,22 @@
     ?>
     <div class="row">
         <div class="col-xs-10">
-
-            <section class="main">
-
-                <div class="main-container">
+            <section class="main-container">
+                <div class="main_books">
                     <?php
                     $result = pg_query($connection, "SELECT livro.book_id,compra.book_id, book_name, book_price FROM livro,compra WHERE compra.book_id = livro.book_id and cliente_id=((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'))");
                     $result = pg_fetch_all($result);
-                    foreach ($result as $linha)
-                    {
+                    foreach ($result as $linha) {
                         echo "
-                 <div class=\"book\">
-                      <a href='user_book_nb.php?id={$linha['book_id']}'>
-                         <p class=\"book_title\">{$linha['book_name']}</p>
-                         <p class=\"book_title\">{$linha['book_price']}</p>
-                       </a>
-                 </div>
-          
-               
-               ";
-
+                               <a class=\"book\" href='user_book_nb.php?id={$linha['book_id']}'>
+                                  <div>
+                                      <p class=\"book_title\">{$linha['book_name']}</p>
+                                      <p class=\"book_price\">{$linha['book_price']}$</p>
+                                  </div>
+                                  <div>
+                                      <p class=\"book_id\">{$linha['book_id']}</p>
+                                  </div>
+                               </a>";
                     }
                     ?>
                 </div>
