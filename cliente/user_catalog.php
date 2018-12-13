@@ -101,7 +101,6 @@
           {
               echo "Sorry, but we can not find an entry to match your query<br><br>";
           }
-
       } else if(isset($_POST["submit_order"])) {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);
@@ -130,7 +129,6 @@
                         </a>
                     </div> 
             ";
-
                 }
             }
         } else {
@@ -161,7 +159,6 @@
                         </a>
                     </div> 
             ";
-
                 }
             }
         }
