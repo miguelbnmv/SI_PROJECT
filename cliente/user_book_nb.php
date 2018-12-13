@@ -178,6 +178,9 @@ if(isset($_POST["insert"])) {
     }
 }
 
+$query2 ="INSERT INTO view_history values({$_SESSION["user_logged_id"]}, {$_GET['id']},CURRENT_TIMESTAMP)";
+$result2 = pg_query($query2);
+
 if (isset($_POST['comprar'])) {
     $query = "INSERT INTO compra  values((select cliente_id from cliente where cliente_email='{$_SESSION['logged']}'),'{$_GET['id']}',(select book_price from livro where book_id='{$_GET['id']}'),current_timestamp)";
     $result = pg_query($query);

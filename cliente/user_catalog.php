@@ -117,7 +117,7 @@
                           <p class='book_price'>{$linha['book_price']}€</p>
                         </a>
                     </div> 
-            ";
+                    ";
                 }
                 else {
                     echo "
