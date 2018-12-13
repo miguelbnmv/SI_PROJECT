@@ -1,24 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <title>ViewComics inc.</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="../assets/images/favicon.ico" />
-    <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
-    <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
-    <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
-    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
-</head>
-<body>
-    <?php
-    session_start();
-    echo("<p class='name'><strong> Hi </strong>{$_SESSION['logged']}</p>");
-    include '../geral/server-connection.php';
-
-
+<?php
+include '../geral/server-connection.php';
+session_start();
+$USERINFO = pg_query($connection, "SELECT cliente_firstname, cliente_lastname FROM cliente WHERE cliente_email = '{$_SESSION['logged']}' ");
+$USERNAME=  pg_fetch_result($USERINFO, 0, 0);
+$USERLASTNAME=  pg_fetch_result($USERINFO, 0, 1);
+echo"
+     <span class='name'><strong> Hi </strong>$USERNAME $USERLASTNAME</span>
+    ";
 ?>
-</body>
-</html>
