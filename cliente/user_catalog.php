@@ -108,7 +108,7 @@
           echo "<div class='main-container'>";
             foreach ($result as $linha) {
                 $Book_comprado = pg_query($connection, "SELECT book_id FROM compra where book_id='{$linha['book_id']}'");
-                $Book_comprado_result = pg_numrows($Book_comprado);
+                $Book_comprado_result = pg_num_rows($Book_comprado);
                 if ($Book_comprado_result>0) {
                     echo "
                     <div class='book'>
@@ -139,7 +139,7 @@
             $result = pg_fetch_all($result);
             foreach ($result as $linha) {
                 $Book_comprado = pg_query($connection, "SELECT book_id FROM compra where book_id='{$linha['book_id']}'");
-                $Book_comprado_result = pg_numrows($Book_comprado);
+                $Book_comprado_result = pg_num_rows($Book_comprado);
                 if ($Book_comprado_result>0) {
                     echo "
                     <div class='book'>
