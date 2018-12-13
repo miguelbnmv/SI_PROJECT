@@ -121,10 +121,31 @@ input[type="search"]:hover, input[type="search"]:focus {
     background: linear-gradient(to right, #1d4350, #a43931);
 }
 .card{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background: #E9E9E9;
     border-radius: 11px;
     width: 304px;
     height: 324px;
     margin-right: 20px ;
     margin-bottom: 20px;
+}
+.card img{
+    margin-bottom: 50px;
+}
+
+.books{
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 24px;
+    letter-spacing: -0.02em;
+    margin-right: 10px;
+}
+.text{
+    margin-left: 15px;
+    text-align: left;
 }

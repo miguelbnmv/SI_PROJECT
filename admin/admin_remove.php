@@ -3,7 +3,7 @@ include '../geral/server-connection.php';
 $searchbookId = pg_query($connection, "SELECT book_id FROM view_history WHERE book_id = {$_GET['id']}");
 $searchbookId2 = pg_numrows($searchbookId);
 if ($searchbookId2 > 0 ) {
-    echo "already saw, you cant delete";
+    echo "already saw, you can't delete";
 }
 else {
     $query = "DELETE FROM livro WHERE book_id = {$_GET['id']}";

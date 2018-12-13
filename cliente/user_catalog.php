@@ -51,27 +51,21 @@
       </div>
   </div>
   <section class="main">
-      <div class="header">
-          <?php
-          include '../geral/header.php';
-          ?>
-          <!-- If you want to show always the form. If not, put inside the else -->
-          <div id="tablebox">
-              <div class="topnav">
-                  <form name="search" method="post">
-                      Seach for:
-                      <input type="text" name="find" /> in
-                      <Select NAME="field">
-                          <Option VALUE="book_name">nome</option>
-                          <Option VALUE="book_price">preço</option>
-                      </Select>
-                      <input type="hidden" name="searching" value="yes" />
-                      <input type="submit" name="search" value="Search" />
-                  </form>
-              </div>
+      <div id="tablebox">
+          <div class="topnav">
+              <form name="search" method="post" style="margin-bottom: 30px">
+                  <input type="text" name="find" /> in
+                  <Select NAME="field">
+                      <Option VALUE="book_name">nome</option>
+                      <Option VALUE="book_price">preço</option>
+                  </Select>
+                  <input type="hidden" name="searching" value="yes" />
+                  <input type="submit" name="search" value="Search" />
+              </form>
           </div>
       </div>
       <?php
+      include '../geral/server-connection.php';
       if(isset($_POST["search"])) {
           $searching = $_POST['searching'];
           $find = $_POST['find'];
@@ -135,10 +129,17 @@
           echo "<div class='main-container'>";
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro");
             $result = pg_fetch_all($result);
+<<<<<<< HEAD
             foreach ($result as $linha) {
                 $Book_comprado = pg_query($connection, "SELECT book_id FROM compra where book_id='{$linha['book_id']}'");
                 $Book_comprado_result = pg_num_rows($Book_comprado);
                 if ($Book_comprado_result>0) {
+=======
+            foreach ($result as $linha){
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra  WHERE book_id = {$linha['book_id']}");
+                $Book_comprado_result = pg_num_rows($Book_comprado);
+                if ($Book_comprado_result >0) {
+>>>>>>> origin/Features/Gei
                     echo "
                     <div class='book'>
                       <a href='user_book_b.php?id={$linha['book_id']}'>

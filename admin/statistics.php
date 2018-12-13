@@ -18,15 +18,15 @@
     <p class="sidebar_title"><strong>Hi</strong> Admin</p>
     <label class="check_container">Catalog
         <input type="radio"  name="radio">
-        <span class="checkmark"></span>
+        <a href="../admin/admin_catalog.php" class="checkmark"></a>
     </label>
     <label class="check_container">Statistics
         <input type="radio" checked="checked" name="radio">
-        <span class="checkmark"></span>
+        <a href="../admin/statistics.php" class="checkmark"></a>
     </label>
     <label class="check_container">Edit Account Settings
-        <input type="radio" name="radio">
-        <span class="checkmark"></span>
+        <input type="radio"  name="radio">
+        <a class="checkmark" href='../admin/admin_account-settings.php'></a>
     </label>
     <div class="logout w-color">
         <a class="w-color" href="../geral/logout.php">Logout</a>
@@ -53,13 +53,41 @@
             $rowCountauthor =  pg_num_rows($rowResourceauthor);
             echo "
             <div class='card'>
-                <p>$rowCountbook books</p>
+            <img  src=\"../assets/images/Group-3.png\" alt=\"plus btn\" style='width: 157px; height:157px ;'>
+            <div class='row center-xs middle-xs'>
+            <div class='col-xs-6'>
+            <p class='text'><b>Total of books on the website</b></p>
+    </div>
+            <div class='col-xs-6'>
+                <p class='w-color books'>$rowCountbook books </p>
+                </div>
+
+            </div>
             </div>
             <div class='card'>
-                <p>$rowCountuser users</p>
+            <img  src=\"../assets/images/Group-2.png\" alt=\"plus btn\" style='width: 147px; height:147px ;'>
+             <div class='row center-xs middle-xs'>
+            <div class='col-xs-6'>
+            <p class='text'><b>Total of users registered in the website</b></p>
+    </div>
+            <div class='col-xs-6'>
+                <p class='w-color books'>$rowCountuser <b>users</b></p>
+                </div>
+  
             </div>
+              </div>
             <div class='card'>
-            <p>$rowCountauthor different authors</p>
+             <img  src=\"../assets/images/Group-3.png\" alt=\"plus btn\" style='width: 157px; height:157px ;'>
+                          <div class='row center-xs middle-xs'>
+            <div class='col-xs-6'>
+            <p class='text'><b>Total of differents authors</b></p>
+    </div>
+            <div class='col-xs-6'>
+                <p class='w-color books'>$rowCountauthor <b>authors</b></p>
+                </div>
+  
+            </div>
+             
             </div> ";
             $ClientId = pg_query($connection, "SELECT * FROM cliente");
             $rowCountClient =  pg_num_rows($ClientId);
@@ -71,12 +99,35 @@
                 $total = $total + $linha['transaction_price'];
                 }
             $avg = $total / $rowCountClient;
+            $SalesPerTime = pg_query($connection, "select count(*) from compra where transaction_date > '2018-12-8' and transaction_date < '2018-12-14'");
+            $SalesPerTime2 = pg_fetch_result($SalesPerTime,0,0);
             echo "
             <div class='card'>
-            <p>Value that each user spends, on average, on the website $avg </p>
+              <img  src=\"../assets/images/Group-1.png\" alt=\"plus btn\" style='width: 157px; height:157px ;'>
+              <div class='row center-xs middle-xs'>
+            <div class='col-xs-7'>
+            <p class='text'><b>Value that each user spends, on average, on the website</b></p>
+    </div>
+            <div class='col-xs-5'>
+                <p class='w-color books'>$avg €</p>
+                </div>
+  
+            </div>
+          
+                   
             </div>
             <div class='card'>
-
+            <img  src=\"../assets/images/Group.png\" alt=\"plus btn\" style='width: 157px; height:157px ;'>
+                          <div class='row center-xs middle-xs'>
+            <div class='col-xs-6'>
+            <p class='text'><b>Value of sales per unit of time</b></p>
+    </div>
+            <div class='col-xs-6'>
+                <p class='w-color books'> $SalesPerTime2</p>
+                </div>
+  
+            </div>
+                
             </div>
            "?>
 

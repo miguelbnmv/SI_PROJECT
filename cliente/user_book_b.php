@@ -161,7 +161,7 @@
         }
         ?>
     </div>
-
+        <a href='../cliente/cliente_seebook.php?id' > ver livro </a>
 </section>
 </body>
 </html>
