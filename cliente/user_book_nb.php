@@ -176,7 +176,7 @@ foreach ($result as $linha) {
                 if ($cliente_balace2 < $book_price2) {
                     echo "You dont have money. Go check your account balance!";
                 }
-                if ($cliente_balace2 >= $book_price2) {
+                else if ($cliente_balace2 >= $book_price2) {
                     $query2 = "UPDATE cliente 
             SET cliente_balance = '$cliente_balaceUpdate'
             WHERE  cliente_id= (select cliente_id from cliente where cliente_email='{$_SESSION['logged']}')";

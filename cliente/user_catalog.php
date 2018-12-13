@@ -60,11 +60,9 @@
       </script>
   </div>
   <section class="main">
-      <!-- If you want to show always the form. If not, put inside the else -->
       <div id="tablebox">
           <div class="topnav">
-              <form name="search" method="post">
-                  Seach for:
+              <form name="search" method="post" style="margin-bottom: 30px">
                   <input type="text" name="find" /> in
                   <Select NAME="field">
                       <Option VALUE="book_name">nome</option>
@@ -76,6 +74,7 @@
           </div>
       </div>
       <?php
+      include '../geral/server-connection.php';
       if(isset($_POST["search"])) {
           $searching = $_POST['searching'];
           $find = $_POST['find'];
@@ -106,29 +105,25 @@
           }
 
       }
-      ?>
-      <div class="main-container">
-        <?php
-        include '../geral/server-connection.php';
-        if(isset($_POST["submit_order"])) {
+         else if(isset($_POST["submit_order"])) {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);
             foreach ($result as $linha)
-                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra");
-                $Book_comprado1 = pg_fetch_result($Book_comprado,0,0);
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra WHERE book_id = {$linha['book_id']}");
+                $Book_comprado_result = pg_num_rows($Book_comprado);
             {
-                if ( "{$linha['book_id']}" == $Book_comprado1) {
+                if ($Book_comprado_result >0) {
                     echo "
                     <div class=\"book\">
-          <a href='user_book_b.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/images/cover.jpg\">
+                        <a href='user_book_b.php?id={$linha['book_id']}'>
+                            <img src=\" ../assets/covers/{$linha['book_cover']}\">
                           <p class=\"book_title\">{$linha['book_name']}</p>
                           <p class=\"book_price\">{$linha['book_price']}€</p>
                         </a>
                     </div> 
             ";
                 }
-                else{
+                else {
                     echo "
                     <div class=\"book\">
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
@@ -144,14 +139,14 @@
         } else {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro");
             $result = pg_fetch_all($result);
-            foreach ($result as $linha) {
-                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra");
-                $Book_comprado1 = pg_fetch_result($Book_comprado,0,0);
-                if ( "{$linha['book_id']}" == $Book_comprado1) {
+            foreach ($result as $linha){
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra  WHERE book_id = {$linha['book_id']}");
+                $Book_comprado_result = pg_num_rows($Book_comprado);
+                if ($Book_comprado_result >0) {
                     echo "
                     <div class=\"book\">
                       <a href='user_book_b.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/images/cover.jpg\">
+                          <img src=\" ../assets/covers/{$linha['book_cover']}\">
                           <p class=\"book_title\">{$linha['book_name']}</p>
                           <p class=\"book_price\">{$linha['book_price']}€</p>
                         </a>

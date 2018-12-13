@@ -16,7 +16,19 @@
 <section class="section section--white">
     <div class="container container-fluid">
         <div class="row middle-xs ">
-            <h1>Black Panther </h1>
+            <?php
+            include '../geral/server-connection.php';
+            $result = pg_query($connection, "select book_name from livro WHERE book_id = {$_GET['id']}");
+            $result = pg_fetch_all($result);
+            foreach ($result as $linha) {
+                echo "
+<a href='../admin/admin_catalog.php'>
+ <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
+ </a>
+                  <h1>{$linha['book_name']}</h1>
+                ";
+            }
+            ?>
             <?php
             include '../geral/header.php';
             ?>
@@ -37,24 +49,22 @@
                                         <img src=\"../assets/images/price.png\">
                                     </a>
                                 </div>
-                                <div class=\"col-xs-3\">
-                                    <form action='../admin/admin_remove.php?id=" . $_GET['id'] . "' method='POST' id='formRemove'>
-                                        <input type='submit' name='Submit' value=''/>
-                                    </form>"
+                                <div class=\"col-xs-1 images\">
+                                 <a href='../admin/admin_remove.php?id=" . $_GET['id'] . "'>
+                                    <img src=\"../assets/images/lixo.png\">
+                                  </a>
+                                   </div>
+                                  ";
+
                                     ?>
                         </div>
             </div>
-                <div class="row middle-xs m-top">
-                    <div class="col-xs-3">
-                        <div class="upload-btn-wrapper">
-                            <button class="btn">Upload a file</button>
-                            <input type="file" name="myfile" />
-                        </div>
-                    </div>
+
                     <?php
                     include '../geral/server-connection.php';
-                    $result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description from livro WHERE book_id = {$_GET['id']}");
+                    $result = pg_query($connection, "select book_name, book_price, book_publisher, book_date, book_author, book_description, book_text, book_cover from livro WHERE book_id = {$_GET['id']}");
                     $result = pg_fetch_all($result);
+
                     foreach ($result as $linha)
                     {
                         echo("
@@ -94,42 +104,69 @@
                                     <p>{$linha['book_description']}</p>
                                 </div>
                             </div>
+                        <div class=\"row middle-xs m-top\">
+                        <div class=\"col-xs-3\">
+                            <div class=\"upload-btn-wrapper\">
+    <img src='../assets/covers/{$linha['book_cover']}'/>
+                            </div>
+                        </div>
+                        <div class=\"col-xs-3\">
+                            <div class=\"upload-btn-wrapper\">
+                    <iframe src='../assets/texts/{$linha['book_text']}'> </iframe>
+                            </div>
+                        </div>
+                    </div>
                             ");
                     }
                     ?>
-                    <div class="row middle-xs m-top">
-                        <div class="col-xs-3">
-                            <div class="upload-btn-wrapper">
-                                <button class="btn">Upload a file</button>
-                                <input type="file" name="myfile"/>
-                            </div>
-                        </div>
-                        <div class="col-xs-3">
-                            <div class="upload-btn-wrapper">
-                                <button class="btn">Upload a file</button>
-                                <input type="file" name="myfile"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row middle-xs m-top">
+                    <?php
+                    $result = pg_query($connection, "select rating from rating where book_id='{$_GET['id']}'");
+                    $result_count = pg_numrows($result);
+                    $ratings = pg_fetch_all($result);
+                    $total=0;
+                    if($result_count==0)
+                    {echo "
+                        <div class='row middle-xs m-top'>
                         <p>Rating</p>
-                        <div class="col-xs-9 book-info">
-                            <p>Boo Title</p>
+                        <div class='col-xs-9 book-info'>
+                            <p>No raking</p>
                         </div>
                     </div>
-                    <div class="row middle-xs m-top">
+                    ";
+                    }
+                    else if ($result_count>0) {
+                        foreach ($ratings as $linha) {
+                            $total = $total + $linha['rating'];
+                        }
+                        $avg = $total / count($ratings);echo "
+                        <div class='row middle-xs m-top'>
+                        <p>Rating</p>
+                        <div class='col-xs-9 book-info'>
+                            <p>$avg</p>
+                        </div>
+                    </div>
+                    ";
+                    }
+                    $favorites = pg_query($connection,"select * from favorite where book_id={$_GET['id']} and favorite=true");
+                    $favoritestotal = pg_numrows($favorites);
+                     echo "
+    
+                    <div class='row middle-xs m-top'>
                         <p>Favorites</p>
-                        <div class="col-xs-9 book-info">
-                            <p>Boo Title</p>
+                        <div class='col-xs-9 book-info'>
+                            <p>$favoritestotal</p>
 
                         </div>
-                    </div>
-                    <div class="row middle-xs m-top">
+                    </div>";
+                     $comments = pg_query($connection, "select * from comentarios where book_id={$_GET['id']}");
+                    $commentstotal = pg_numrows($comments);
+                    echo "
+                    <div class='row middle-xs m-top'>
                         <p>Comments</p>
-                        <div class="col-xs-9 book-info">
-                            <p>Boo Title</p>
-                            <?php
-                                echo("<a class=\"b-color\" href='../admin/admin_comments.php?id=" . $_GET['id'] . "'>See More</a>")
+                        <div class='col-xs-9 book-info'>
+                            <p>$commentstotal </p>
+       
+                   <a class=\"b-color\" href='../admin/admin_comments.php?id=" . $_GET['id'] . "'> See More</a>";
                             ?>
                         </div>
                     </div>
