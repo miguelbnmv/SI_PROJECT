@@ -50,7 +50,7 @@ foreach ($result as $linha) {
 
     $result = pg_query($query);
 
-    $query2 = "INSERT INTO price_history values({$_GET['id']},{$_SESSION["admin_logged_id"]},'{$_POST["book_price"]}',CURRENT_TIMESTAMP)";
+    $query2 = "INSERT INTO price_history values({$_SESSION["admin_logged_id"]},{$_GET['id']},'{$_POST["book_price"]}',CURRENT_TIMESTAMP)";
     $result2 = pg_query($query2);
 
     if (!$result) {
@@ -60,7 +60,6 @@ foreach ($result as $linha) {
         header('Location: http://localhost:63342/SI_PROJECT/admin/admin_catalog.php');
     }
 }
-
 }?>
     </div>
 </section>

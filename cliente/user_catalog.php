@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/catalog.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
-
   <div id="mySidenav" class="sidenav w-color">
-      <p class="sidebar_title">To make your life </br><strong>a lot easier</strong>, sort by</p>
+      <h1 class="sidebar_title">To make your life </br><strong>a lot easier</strong>, sort by</h1>
       <form method="POST" id="formCreateComment">
           <label class="check_container">Name
               <input type="radio" name="order" value="book_name">
@@ -37,42 +37,38 @@
               <input type="radio" name="order" value="book_publisher">
               <span value="book_publisher" class="checkmark"></span>
           </label>
-          <input type='submit' value='submit_order' name='submit_order'>
+          <input type='submit' value='Submit Order' name='submit_order'>
       </form>
 
       <?php
-      include '../geral/header.php';
       include '../geral/server-connection.php';
-
       echo"
-          <a href='../cliente/cliente_account-settings.php'> oi mano</a>
-          <a href='../cliente/cliente_account-favorites.php'> oi mano fav</a>
+          <a href='../cliente/cliente_account-settings.php'><p>Settings</p></a>
+          <a href='../cliente/cliente_account-favorites.php'><p>Favorites</p></a>
           " ?>
-      <script type="text/javascript">
-          function displayForm(c){
-              if(c.value == "1"){
-                  document.getElementById("panel").style.visibility='visible';
-              }
-              else{
-                  document.getElementById("panel").style.visibility='hidden';
-              }
-          }
-      </script>
+      <div class="logout w-color">
+          <a class="w-color" href="../geral/logout.php"><p>Logout</p></a>
+      </div>
   </div>
   <section class="main">
-      <!-- If you want to show always the form. If not, put inside the else -->
-      <div id="tablebox">
-          <div class="topnav">
-              <form name="search" method="post">
-                  Seach for:
-                  <input type="text" name="find" /> in
-                  <Select NAME="field">
-                      <Option VALUE="book_name">nome</option>
-                      <Option VALUE="book_price">preço</option>
-                  </Select>
-                  <input type="hidden" name="searching" value="yes" />
-                  <input type="submit" name="search" value="Search" />
-              </form>
+      <div class="header">
+          <?php
+          include '../geral/header.php';
+          ?>
+          <!-- If you want to show always the form. If not, put inside the else -->
+          <div id="tablebox">
+              <div class="topnav">
+                  <form name="search" method="post">
+                      Seach for:
+                      <input type="text" name="find" /> in
+                      <Select NAME="field">
+                          <Option VALUE="book_name">nome</option>
+                          <Option VALUE="book_price">preço</option>
+                      </Select>
+                      <input type="hidden" name="searching" value="yes" />
+                      <input type="submit" name="search" value="Search" />
+                  </form>
+              </div>
           </div>
       </div>
       <?php
@@ -90,12 +86,13 @@
           if (!$result) {
               die("Error in SQL query: " . pg_last_error());
           }
+          echo "<div class='main-container'>";
           foreach ($resultall as $linha) {
           echo "
-                  <div class=\"book\">
-                      <img src=\" ../assets/covers/{$linha['book_cover']}\">
-                      <p class=\"book_title\">{$linhas['book_name']}</p>
-                      <p class=\"book_price\">{$linhas['book_price']}€</p>
+                  <div class='book'>
+                      <img src='../assets/covers/{$linha['book_cover']}'>
+                      <p class='book_title'>{$linha['book_name']}</p>
+                      <p class='book_price'>{$linha['book_price']}€</p>
                   </div>
          ";
           }
@@ -105,36 +102,31 @@
               echo "Sorry, but we can not find an entry to match your query<br><br>";
           }
 
-      }
-      ?>
-      <div class="main-container">
-        <?php
-        include '../geral/server-connection.php';
-        if(isset($_POST["submit_order"])) {
+      } else if(isset($_POST["submit_order"])) {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);
-            foreach ($result as $linha)
-                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra");
-            $Book_comprado1 = pg_fetch_result($Book_comprado,0,0);
-            {
-                if ( "{$linha['book_id']}" == $Book_comprado1) {
+          echo "<div class='main-container'>";
+            foreach ($result as $linha) {
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra where book_id='{$linha['book_id']}'");
+                $Book_comprado_result = pg_numrows($Book_comprado);
+                if ($Book_comprado_result>0) {
                     echo "
-                    <div class=\"book\">
-          <a href='user_book_b.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/images/cover.jpg\">
-                          <p class=\"book_title\">{$linha['book_name']}</p>
-                          <p class=\"book_price\">{$linha['book_price']}€</p>
+                    <div class='book'>
+                           <a href='user_book_b.php?id={$linha['book_id']}'>
+                          <img src='../assets/covers/{$linha['book_cover']}'>
+                          <p class='book_title'>{$linha['book_name']}</p>
+                          <p class='book_price'>{$linha['book_price']}€</p>
                         </a>
                     </div> 
             ";
                 }
-                else{
+                else {
                     echo "
-                    <div class=\"book\">
+                    <div class='book'>
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
-                          <img src=\" ../assets/covers/{$linha['book_cover']}\">
-                          <p class=\"book_title\">{$linha['book_name']}</p>
-                          <p class=\"book_price\">{$linha['book_price']}€</p>
+                          <img src='../assets/covers/{$linha['book_cover']}'>
+                          <p class='book_title'>{$linha['book_name']}</p>
+                          <p class='book_price'>{$linha['book_price']}€</p>
                         </a>
                     </div> 
             ";
@@ -142,29 +134,30 @@
                 }
             }
         } else {
+          echo "<div class='main-container'>";
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro");
             $result = pg_fetch_all($result);
             foreach ($result as $linha) {
-                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra");
-                $Book_comprado1 = pg_fetch_result($Book_comprado,0,0);
-                if ( "{$linha['book_id']}" == $Book_comprado1) {
+                $Book_comprado = pg_query($connection, "SELECT book_id FROM compra where book_id='{$linha['book_id']}'");
+                $Book_comprado_result = pg_numrows($Book_comprado);
+                if ($Book_comprado_result>0) {
                     echo "
-                    <div class=\"book\">
+                    <div class='book'>
                       <a href='user_book_b.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/images/cover.jpg\">
-                          <p class=\"book_title\">{$linha['book_name']}</p>
-                          <p class=\"book_price\">{$linha['book_price']}€</p>
+                          <img src='../assets/covers/{$linha['book_cover']}'>
+                          <p class='book_title'>{$linha['book_name']}</p>
+                          <p class='book_price'>{$linha['book_price']}€</p>
                         </a>
                     </div> 
             ";
                 }
                 else{
                     echo "
-                    <div class=\"book\">
+                    <div class='book'>
                         <a href='user_book_nb.php?id={$linha['book_id']}'>
-                          <img src=\"../assets/covers/{$linha['book_cover']}\">
-                          <p class=\"book_title\">{$linha['book_name']}</p>
-                          <p class=\"book_price\">{$linha['book_price']}€</p>
+                          <img src='../assets/covers/{$linha['book_cover']}'>
+                          <p class='book_title'>{$linha['book_name']}</p>
+                          <p class='book_price'>{$linha['book_price']}€</p>
                         </a>
                     </div> 
             ";
@@ -173,15 +166,8 @@
             }
         }
         ?>
-
-      </div>
-      <div class="logout b-color">
-          <a class="b-color" href="../geral/logout.php">logout</a>
       </div>
   </section>
-
-
-
 </body>
 </html>
 <script>

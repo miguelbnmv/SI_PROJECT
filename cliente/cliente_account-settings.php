@@ -10,12 +10,13 @@
     <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/statistics.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/form.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
 <div id="mySidenav" class="sidenav w-color">
-    <p class="sidebar_title"><strong>Hi</strong> Admin</p>
+    <h1 class="sidebar_title"><strong>Hi</strong> Admin</h1>
     <label class="check_container">Catalog
         <input type="radio"  name="radio">
         <span class="checkmark"></span>
@@ -28,11 +29,12 @@
         <input type="radio" name="radio">
         <span class="checkmark"></span>
     </label>
-    <div class="logout w-color">
-        <a class="w-color" href="../geral/logout.php">Logout</a>
+
+    <div>
+        <a class="w-color" href="../cliente/cliente_account-collection.php"><p>Coleção</p></a>
     </div>
-    <div class="w-color">
-        <a class="w-color" href="../cliente/cliente_account-collection.php">Coleção</a>
+    <div class="logout">
+        <a class="w-color" href="../geral/logout.php"><p>Logout</p></a>
     </div>
 </div>
 <section class="main">
@@ -55,13 +57,13 @@
                     foreach ($result as $linha) {
                         echo "
                         <form method='POST'>
-                            <li>First Name:</li>
-                            <li><input type='text' name='cliente_firstname' value='{$linha['cliente_firstname']}'/></li>
-                            <li>Second Name:</li>
-                            <li><input type='text' name='cliente_lastname' value='{$linha['cliente_lastname']}'/></li>
-                            <li>User Email:</li>
-                            <li><input type='text' name='cliente_email' value='{$linha['cliente_email']}'/></li>
-                            <li> <input type='submit' name='new' /></li>
+                            <p>First Name:</p>
+                            <input type='text' name='cliente_firstname' value='{$linha['cliente_firstname']}'/>
+                            <p>Second Name:</p>
+                            <input type='text' name='cliente_lastname' value='{$linha['cliente_lastname']}'/>
+                            <p>User Email:</p>
+                            <input type='text' name='cliente_email' value='{$linha['cliente_email']}'/>
+                            <input type='submit' name='new' /></li>
                         </form>";
                     }
 
