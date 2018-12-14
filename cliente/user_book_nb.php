@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/admin_comments.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/rating.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/user_book.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
@@ -23,12 +24,12 @@
     $result = pg_fetch_all($result);
     foreach ($result as $linha) {
         echo "
-            <h1 class=\"sidebar_title\">This is the <strong>{$linha['book_name']}</strong></h1>
+            <h1 class=\"sidebar_title\">This is <strong>{$linha['book_name']}</strong></h1>
             <p class=\"\">The author is <strong>{$linha['book_author']}</strong></p>
             <p class=\"\">Publishing house is <strong>{$linha['book_publisher']}</strong></p>
             <p class=\"\">Published in <strong>{$linha['book_date']}</strong></p>
             <p class=\"\">The book ID is <strong>{$_GET['id']}</strong></p>
-            <p><strong>$favoritecount2</strong>favoritos</p>
+            <p> <strong>$favoritecount2</strong> favorites</p>
         ";
     }
     $rating_push = pg_query($connection, "select rating from rating where book_id='{$_GET['id']}'");
@@ -42,11 +43,14 @@
             $total = $total + $linha['rating'];
         }
         $avg = $total / count($ratings);
-        echo "<p><strong>$avg</strong> estrelas em 5</p>";
+        echo "<p><strong>$avg</strong> out of 10 stars</p>";
     }
     ?>
 </div>
 <div class="main">
+    <a href='../cliente/user_catalog.php'>
+        <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
+    </a>
     <?php
     include '../geral/header.php';
     ?>
@@ -62,8 +66,8 @@
                             <input id='fav' type=\"submit\" class=\"button\" name=\"insert\" value=\"\" src=\"../assets/images/like.png\" onclick=\"change_background\" >♡ </input>
                         </form>
                      </div> 
+  
                      <form method=\"POST\" id=\"formCreateComment\">
-                      
                       <input aria-flowto=\"rating2\" class=\"rating__input\" type=\"radio\" name=\"rating\" value=\"1\" id=\"rating1\" aria-flowto=\"rating2\">
                       <label class=\"rating__label\" for=\"rating1\">☆
                         <span class=\"rating__star\">1 Stars</span> 
@@ -94,25 +98,30 @@
          ";
         foreach ($result as $linha) {
             echo "
-                    <img src = \"../assets/covers/{$linha['book_cover']}\">
+
+                 <img  src = \"../assets/covers/{$linha['book_cover']}\">
                 </div>
                 <div class='right'>
                     <h1 class=\"\">Description</h1>
                     <p>{$linha['book_description']}</p>
-                    <h1 class=\"\">Price </h1>
-                    <p>{$linha['book_price']}</p>
+                <div class=\"card\">
+        <p class=\"w-color\" style='margin-bottom: 10px'>The price is <strong>{$linha['book_price']} €</strong> </p>
+        <div class='small-card'>
+                    <form method=\"POST\">
+                        <input id='comprar' type=\"submit\" class=\"button\" name=\"comprar\" value=\"\" >  comprar </input>
+                    </form>
+        </div>
+    </div>
                     ";
         }
         ?>
-                    <form method="POST">
-                        <input id='comprar' type="submit" class="button" name="comprar" value="" >  comprar </input>
-                    </form>
+
                 </div>
             </div>
             <div class="create_comment">
                 <form method="POST" id="formCreateComment">
-                    <p>Admin</p>
-                    <textarea title="comment" name="comment"></textarea>
+                    <p>User</p>
+                    <textarea title="comment" name="comment" style="resize: none;"></textarea>
                     <div class="delete">
                         <input type="submit" value="Submit" name="submit" alt="Submit Comment" />
                     </div>
@@ -125,7 +134,7 @@
         ";
         //Show comments
         $result = pg_query($connection, "select cliente_firstname, comment_content, comment_date from cliente, comentarios where cliente.cliente_id= comentarios.cliente_id and book_id={$_GET['id']}");
-        $result_count = pg_numrows($result);
+        $result_count = pg_num_rows($result);
         $result = pg_fetch_all($result);
         if($result_count==0) {
             echo "</br>Não há comentários";
@@ -207,12 +216,15 @@ if (isset($_POST['comprar'])) {
 if(isset($_POST["submit_rating"])) {
     $all_ratings = pg_query($connection,"select * from rating where cliente_id={$_SESSION['user_logged_id']}");
     $all_ratings2 = pg_numrows($all_ratings);
+    echo "$all_ratings2";
     if($all_ratings2==0) {
         $query = "INSERT INTO rating values({$_SESSION['user_logged_id']},{$_GET['id']},{$_POST["rating"]})";
         $result = pg_query($query);
+        echo "oi";
     } else {
-        $query = "UPDATE rating SET rating = {$_POST["rating"]} where cliente_id={$_SESSION['user_logged_id']}";
+        $query = "UPDATE rating SET rating = '{$_POST["rating"]}' where cliente_id={$_SESSION['user_logged_id']}";
         $result = pg_query($query);
+        echo "ola";
     }
 }
 ?>

@@ -4,13 +4,43 @@
     justify-content: space-between;
  }
 
-.left {
+.left img{
+    width: 224px;
+    height: auto;
+}
+.card{
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    width: 340.18px;
+    height: 106px;
+    background-color: #191919;
+    border-radius: 11px;
+    background-image: url("../images/Home_black.png");
+    margin-top: 100px;
+}
+.card p{
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 18px;
+}
+.small-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+    border-radius: 64px;
+    width: 253.63px;
+    background-color: white;
+    height: 28.91px;
+}
+#formCreateComment{
+    margin-bottom: 10px;
 }
 
-.left img {
-    width: 400px;
-    height: auto;
+raking_submit{
+background-color: white;
 }

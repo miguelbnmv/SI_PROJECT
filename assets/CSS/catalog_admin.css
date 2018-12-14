@@ -10,7 +10,12 @@
 .main_header {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
+    align-items: center;
+}
+.catalog_title{
+    display: flex;
+    flex-direction: row;
     align-items: center;
 }
 .main-container {
@@ -32,8 +37,8 @@
     padding: 0px 5px 0 5px;
 }
 .book {
-    width: 15em;
-    height: 3em;
+    width: 360px;
+    height: 58px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -44,6 +49,7 @@
     font-Family: "Open Sans",sans-serif;
     font-size: 16px;
     letter-spacing: normal;
+    border-radius: 9px;
 }
 
 .book_title {
@@ -66,9 +72,15 @@ h1 {
     margin: 0;
     padding-right: 1em;
 }
+form[name=search] {
+display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
 
-input[type="search"] {
-    width: 30rem;
+input[type="text"] {
+    width: 448px;
     padding: .5rem 1rem;
     background-color: var(--color-grey);
     color: #C4C4C4;
@@ -78,15 +90,39 @@ input[type="search"] {
     font-size: 12px;
     line-height: 16px;
     margin-bottom: 2em;
+    margin-top: 2em;
+    margin-right: 10px;
+    transition: background-color 1s;
 }
 
-input[type="search"]:hover, input[type="search"]:focus {
-    border: 1px solid var(--color-black);
-}
-
-.plus{
+input[type="text"]:hover, select[name="field"]:hover, input[name="search"]:hover {
+    background-color: #eeeeee;
 
 }
+select[name="field"]{
+    background-color: var(--color-grey);
+    border-radius: 1rem;
+    border: none;
+    width: 65px;
+    height:30px;
+    color: darkgray;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: background-color 1s;
+}
+
+input[name="search"]{
+    width: 86px;
+    height: 30px;
+    border: none;
+    background: #F5F5F5;
+    border-radius: 17px;
+    transition: background-color 1s;
+}
+input[name="search"]:focus, select[name="field"]:focus, input[type="text"]:focus{
+    outline: none;
+}
+
 .plus-image{
     width: 35px;
     height: 35px;
@@ -94,17 +130,20 @@ input[type="search"]:hover, input[type="search"]:focus {
 
 .main_books a {
     color: var(--color-black);
+    transition: box-shadow 0.5s;
 }
 
 .main_books a:hover {
-    color: var(--color-white);
-    background: linear-gradient(to right, #1d4350, #a43931);
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
 }
 .logout,.account {
     margin-left: 20px;
     display:flex;
     flex-direction: row;
     align-items: center;
+}
+.logout{
+    margin-top: 50px;
 }
 .logout img{
     width: 34px;

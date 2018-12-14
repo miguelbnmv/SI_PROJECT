@@ -15,21 +15,28 @@
 </head>
 <body>
 <div id="mySidenav" class="sidenav w-color">
-    <p class="sidebar_title"><strong>Hi</strong> Admin</p>
-    <label class="check_container">Catalog
-        <input type="radio"  name="radio">
-        <a href="../admin/admin_catalog.php" class="checkmark"></a>
-    </label>
-    <label class="check_container">Statistics
-        <input type="radio" checked="checked" name="radio">
-        <a href="../admin/statistics.php" class="checkmark"></a>
-    </label>
-    <label class="check_container">Edit Account Settings
-        <input type="radio"  name="radio">
-        <a class="checkmark" href='../admin/admin_account-settings.php'></a>
-    </label>
-    <div class="logout w-color">
-        <a class="w-color" href="../geral/logout.php">Logout</a>
+    <div class="flex-between">
+        <div class="account" style="margin-top: 4px">
+            <img class="account-image"  src="../assets/images/menu.png" alt="plus btn">
+            <h2>Account</h2>
+        </div>
+        <label class="check_container">Catalog
+            <input type="radio"  name="radio">
+            <span class="checkmark"></span>
+        </label>
+        <label class="check_container">Statistics
+            <input type="radio" checked="checked" name="radio">
+            <a href="../admin/statistics.php" class="checkmark"></a>
+        </label>
+        <label class="check_container">Edit Account Settings
+            <input type="radio" name="radio">
+            <a class="checkmark" href='../admin/admin_account-settings.php'></a>
+        </label>
+
+        <div class="logout w-color">
+            <img  src="../assets/images/logout.png" alt="plus btn">
+            <a class="w-color" href="../geral/logout.php">Logout</a>
+        </div>
     </div>
 </div>
 <section class="main">

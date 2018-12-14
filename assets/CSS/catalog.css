@@ -1,9 +1,12 @@
 .main-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 3em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-top: 3rem;
 }
+
 .title_sidebar {
     font-family: "Open Sans", sans-serif;
     font-style: normal;
@@ -15,34 +18,123 @@
     padding: 100px 5px 0 5px;
 }
 .book {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
-    margin-bottom: 7rem;
+    background-color: #F5F5F5;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px 30px;
+    border-radius: 7px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
+    transition:box-shadow 0.5s ;
 }
-.book_title {
-    font-Family: "Open Sans",sans-serif;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 19px;
-    letter-spacing: normal;
-    color: var(--color-black);
+.book:hover{
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+}
 
-}
-.book_price {
-    font-Family: "Open Sans",sans-serif;
-    font-weight: lighter;
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: normal;
-    color: var(--color-black);
-}
 .book img {
-    width: 200px;
+    width: 153px;
     height: auto;
 }
+.book_title {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+    color: var(--color-black);
+    margin-top: 20px;
+}
+.book_price {
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 300;
+    line-height: normal;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    color: var(--color-black);
+}
+
 button img{
     width: 13px;
     height: 13px;
+}.logout,.account {
+     margin-left: 20px;
+     display:flex;
+     flex-direction: row;
+     align-items: center;
+ }
+.logout{
+    margin-top: 50px;
+}
+.logout img{
+    width: 34px;
+    height: 34px;
+    padding-right:20px;
+}
+.account{
+    margin-bottom: 40px;
+}
+.account img{
+    width: 32px;
+    height: 32px;    padding-right:20px;
+
+}
+.order{
+    margin-left: 60px;
+}
+form[name=search] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 4rem;
+}
+
+input[type="text"] {
+    width: 448px;
+    padding: .5rem 1rem;
+    background-color: var(--color-grey);
+    color: #C4C4C4;
+    border: none;
+    border-radius: 1rem;
+    font-weight: lighter;
+    font-size: 12px;
+    line-height: 16px;
+    margin-bottom: 2em;
+    margin-top: 2em;
+    margin-right: 10px;
+    transition: background-color 1s;
+}
+
+input[type="text"]:hover, select[name="field"]:hover, input[name="search"]:hover {
+    background-color: #eeeeee;
+
+}
+select[name="field"]{
+    background-color: var(--color-grey);
+    border-radius: 1rem;
+    border: none;
+    width: 65px;
+    height:30px;
+    color: darkgray;
+    margin-left: 10px;
+    margin-right: 10px;
+    transition: background-color 1s;
+}
+
+input[name="search"]{
+    width: 86px;
+    height: 30px;
+    border: none;
+    background: #F5F5F5;
+    border-radius: 17px;
+    transition: background-color 1s;
+}
+input[name="search"]:focus, select[name="field"]:focus, input[type="text"]:focus{
+    outline: none;
 }

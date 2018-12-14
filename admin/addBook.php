@@ -10,15 +10,20 @@
     <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/addBook.css" type="text/css">
-    <link rel="stylesheet" href="../assets/CSS/catalog.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
 <section class="section section--white">
     <div class="container container-fluid">
-        <div class="row middle-xs">
+        <div class="row between-lg">
+            <div class="add_title">
+            <a href='../admin/admin_catalog.php'>
+                <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
+            </a>
                  <h1>Add Book </h1>
+            </div>
                 <?php
                 include '../geral/header.php';
                 ?>

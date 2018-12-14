@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
     <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/admin_comments.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/rating.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/user_book.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
@@ -24,12 +26,14 @@
     $result = pg_fetch_all($result);
     foreach ($result as $linha) {
         echo "
-            <h1 class=\"sidebar_title\">This is the <strong>{$linha['book_name']}</strong></h1>
+
+            <h1 class=\"sidebar_title\" ><strong>This is</strong> {$linha['book_name']}</h1>
             <p class=\"\">The author is <strong>{$linha['book_author']}</strong></p>
             <p class=\"\">Publishing house is <strong>{$linha['book_publisher']}</strong></p>
             <p class=\"\">Published in <strong>{$linha['book_date']}</strong></p>
             <p class=\"\">The book ID is <strong>{$_GET['id']}</strong></p>
-            <p><strong>$favoritecount2</strong> favoritos</p>
+            <p> <strong>$favoritecount2 </strong> favorites</p>
+ 
         ";
     }
     //Rating Average
@@ -38,17 +42,20 @@
     $ratings = pg_fetch_all($rating_push);
     $total=0;
     if($rating_count==0) {
-    echo "Ninguém fez rating";
+    echo "<p><strong>No</strong> rating</p>";
     } else if ($rating_count>0) {
     foreach ($ratings as $linha) {
     $total = $total + $linha['rating'];
     }
     $avg = $total / count($ratings);
-    echo "<p><strong>$avg</strong> estrelas em 5</p>";
+    echo "<p><strong>$avg</strong> out of 10 stars</p>";
     }
     ?>
 </div>
 <section class="main">
+    <a href='../cliente/user_catalog.php'>
+        <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
+    </a>
     <?php
     include '../geral/header.php';
     ?>
@@ -91,26 +98,31 @@
                         <span class=\"rating__star\">5 Stars</span> 
                       </label>
                       
-                      <input type='submit' value='submit_rating' name='submit_rating'>
+                      <input class='raking_submit' type='submit' value='submit_rating' name='submit_rating'>
                      </form>
             ";
             foreach ($result as $linha) {
                 echo "
-                            <img src = \"../assets/covers/{$linha['book_cover']}\">
+                      <img src = \"../assets/covers/{$linha['book_cover']}\">
                         </div>
-                        <div class='right'>
+                        <div class=''>
                             <h1 class=\"\">Description</h1>
                             <p>{$linha['book_description']}</p>
-                            <h1 class=\"\">Price </h1>
-                            <p>{$linha['book_price']}</p>
+                   <div class=\"card\">
+        <p class=\"w-color\" style='margin-bottom: 10px'>You can <strong>read</strong> this book</p>
+        <div class='small-card'>
+        <a href='../cliente/cliente_seebook.php?id' class=\"b-color\"> Read book </a>
+        </div>
+    </div>
+
                         </div>                               
                     </div>";
                  }
         ?>
         <div class="create_comment">
             <form method="POST" id="formCreateComment">
-                <p>Admin</p>
-                <textarea name="comment"></textarea>
+                <p>User</p>
+                <textarea name="comment" style="resize: none;"></textarea>
                 <div class="delete">
                     <input type="submit" value="Submit" name="submit" alt="Submit Comment" />
                 </div>
@@ -161,7 +173,6 @@
         }
         ?>
     </div>
-        <a href='../cliente/cliente_seebook.php?id' > ver livro </a>
 </section>
 </body>
 </html>

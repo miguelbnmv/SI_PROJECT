@@ -8,36 +8,37 @@
     <link rel="shortcut icon" href="../assets/images/favicon.ico" />
     <link rel="stylesheet" href="../assets/CSS/style.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/admin_comments.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
-    <div id="mySidenav" class="sidenav w-color">
-        <p class="sidebar_title"><strong>Hi</strong> Admin</p>
-        <label class="check_container">Catalog
-            <input type="radio" checked="checked" name="radio">
-            <span class="checkmark"></span>
-        </label>
-        <label class="check_container">Statistics
-            <input type="radio" name="radio">
-            <span class="checkmark"></span>
-        </label>
-        <label class="check_container">Edit Account Settings
-            <input type="radio" name="radio">
-            <span class="checkmark"></span>
-        </label>
-        <div class="logout w-color">
-            <a class="w-color" href="../geral/logout.php">Logout</a>
-        </div>
-    </div>
-    <section class="main">
-        <div class="main_header">
-            <h1>comments</h1>
-        </div>
-        <?php
-        include '../geral/header.php';
-        ?>
+<section class="section section--white">
+    <div class="container container-fluid">
+            <div class="row between-lg m-top">
+            <?php
+                        include '../geral/server-connection.php';
+            $result = pg_query($connection, "select book_name from livro WHERE book_id = {$_GET['id']}");
+            $result = pg_fetch_all($result);
+            foreach ($result as $linha) {
+                echo "
+            <div class='book_title'>
+                <a href='../admin/admin_SeeBook.php?id=" . $_GET['id'] . "'>
+                    <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
+                </a>
+                <h1>{$linha['book_name']} Comments </h1>
+
+            </div> ";
+            }
+            ?>
+            <?php
+            include '../geral/header.php';
+            ?>
+            </div>
+
+
         <div class="main-container">
             <div class="create_comment">
                 <form method="POST" id="formCreateComment">
@@ -56,7 +57,7 @@
                $result = pg_fetch_all($result);
                if($result_count==0)
                {
-                   echo "Não há comentários";
+                   echo " <p style='margin-left: 20px'>Não há comentários</p>";
                }
                else if ($result_count>0)
                {
@@ -81,7 +82,9 @@
                ?>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 </body>
 </html>
 <?php

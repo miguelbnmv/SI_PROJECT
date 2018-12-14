@@ -16,11 +16,10 @@
 <body>
 <div id="mySidenav" class="sidenav w-color">
     <div class="flex-between">
-    <div class="account" style="margin-top: 10px">
+    <div class="account" style="margin-top: 4px">
         <img class="account-image"  src="../assets/images/menu.png" alt="plus btn">
-    <h1>Account</h1>
+    <h2>Account</h2>
     </div>
-    <p class="sidebar_title"><strong>Hi</strong> Admin</p>
     <label class="check_container">Catalog
         <input type="radio" checked="checked" name="radio">
         <span class="checkmark"></span>
@@ -63,54 +62,53 @@
     </div>
 </div>
 </div>
-<section class="main">
+<section class="main ">
     <div class="main_header">
+        <div class="catalog_title">
         <h1>Catalog</h1>
         <a class="plus" href="addBook.php">
             <img class="plus-image"  src="../assets/images/plus.png" alt="plus btn">
         </a>
+        </div>
+        <?php
+        include '../geral/header.php';
+        ?>
     </div>
-    <?php
-    include '../geral/header.php';
-    ?>
-    <div class="main-container">
-        <div>
             <form name="search" method="post" style="margin-bottom: 30px">
-                <input type="text" name="find" /> for
-                <Select NAME="field">
-                    <Option VALUE="book_name">name</option>
-                    <Option VALUE="book_price">price</option>
-                </Select>
+                <input type="text" name="find" placeholder="Search for something..."/> for
+                <div class="styled-select black rounded">
+                    <select name="field">
+                        <Option VALUE="book_name">name</option>
+                        <Option VALUE="book_price">price</option>
+                    </select>
+                </div>
                 <input type="hidden" name="searching" value="yes" />
                 <input type="submit" name="search" value="Search" />
             </form>
+
+    <div class="main_books">
             <?php
+            include '../geral/server-connection.php';
             if(isset($_POST["search"])) {
                 $searching = $_POST['searching'];
                 $find = $_POST['find'];
                 $field = $_POST['field'];
                 if ($find == "") { //se a pessoa não colocar nada no input find, se nao pesquisar por nada
                     echo "<p>You forgot to enter a search term";
-                    exit;
                 }
                 $query = "SELECT * from livro where $field = '$find' ";
                 $result = pg_query($query);
                 $resultall = pg_fetch_all($result);
-                if (!$result) {
-                    die("Error in SQL query: " . pg_last_error());
-                }
                 foreach ($resultall as $linha) {
                     echo "
+                            <a  href='admin_SeeBook.php?id={$linha['book_id']}'>
+                                 <div class='book_content'>
+                              <p class=\"book_title b-color\">{$linha['book_name']}</p>
+                              <p class=\"book_price b-color\">{$linha['book_price']}$</p>
+                                     </div>
+                              <p class=\"book_id b-color\">{$linha['book_id']}</p>
+                             </a>
 
-                            <a class=\"book\" href='SeeBook.php?id={$linha['book_id']}'>
-                          <div>
-                              <p class=\"book_title\">{$linha['book_name']}</p>
-                              <p class=\"book_price\">{$linha['book_price']}$</p>
-                          </div>
-                          <div>
-                              <p class=\"book_id\">{$linha['book_id']}</p>
-                          </div>
-                       </a>
          
          ";
                 }
@@ -121,45 +119,36 @@
                 }
 
             }
-            ?>
-        </div>
-        <div class="main_books">
-            <?php
-            include '../geral/server-connection.php';
-            if(isset($_POST["submit_order"])) {
+            else if(isset($_POST["submit_order"])) {
                 $result = pg_query($connection, "SELECT book_name, book_price, book_id FROM livro order by {$_POST["order"]}");
                 $result = pg_fetch_all($result);
                 foreach ($result as $linha) {
                                     echo "
-                    <a class=\"book\" href='SeeBook.php?id={$linha['book_id']}'>
-                          <div>
-                              <p class=\"book_title\">{$linha['book_name']}</p>
-                              <p class=\"book_price\">{$linha['book_price']}$</p>
-                          </div>
-                          <div>
-                              <p class=\"book_id\">{$linha['book_id']}</p>
-                          </div>
-                       </a>
+                                <a class=\"book\" href='admin_SeeBook.php?id={$linha['book_id']}'>
+                                <div class='book_content'>
+                              <p class=\"book_title b-color\">{$linha['book_name']}</p>
+                              <p class=\"book_price b-color\">{$linha['book_price']}$</p>
+                              </div>
+                              <p class=\"book_id b-color\">{$linha['book_id']}</p>
+                             </a>
             ";
                                 }
             } else {
                 $result = pg_query($connection, "select book_name, book_price, book_id from livro ");
                 $result = pg_fetch_all($result);
                 foreach ($result as $linha) {
-                    echo("<a class=\"book\" href='SeeBook.php?id={$linha['book_id']}'>
-                          <div>
-                              <p class=\"book_title\">{$linha['book_name']}</p>
-                              <p class=\"book_price\">{$linha['book_price']}$</p>
-                          </div>
-                          <div>
-                              <p class=\"book_id\">{$linha['book_id']}</p>
-                          </div>
-                       </a>");
+                    echo("    <a class=\"book\" href='admin_SeeBook.php?id={$linha['book_id']}'>
+                                <div class='book_content'>
+                              <p class=\"book_title b-color\">{$linha['book_name']}</p>
+                              <p class=\"book_price b-color\">{$linha['book_price']}$</p>
+                                    </div>
+                              <p class=\"book_id b-color \">{$linha['book_id']}</p>
+                             </a>
+                       ");
                 }
             }
             ?>
         </div>
-    </div>
 </section>
 </body>
 <script>

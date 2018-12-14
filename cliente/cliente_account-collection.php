@@ -15,29 +15,56 @@
 </head>
 <body>
 <div id="mySidenav" class="sidenav w-color">
-    <h1 class="sidebar_title"><strong>Hi</strong> Admin</h1>
-    <label class="check_container">Catalog
-        <input type="radio"  name="radio">
-        <span class="checkmark"></span>
-    </label>
-    <label class="check_container">Statistics
-        <input type="radio" checked="checked" name="radio">
-        <span class="checkmark"></span>
-    </label>
-    <label class="check_container">Edit Account Settings
-        <input type="radio" name="radio">
-        <span class="checkmark"></span>
-    </label>
-    <div class="logout">
-        <a class="w-color" href="../geral/logout.php"><p>Logout</p></a>
+    <div class="flex-between">
+        <div class="account" style="margin-top: 4px">
+            <a href="../cliente/menu.php">
+                <img class="account-image"  src="../assets/images/menu.png" alt="plus btn">
+            </a>
+            <h2>Account</h2>
+        </div>
+        <p style="margin-bottom: 30px">All about your account details</p>
+
+        <label class="check_container1">Edit Account Settings
+            <input type="radio" name="order" value="book_name"  >
+            <a href="../cliente/cliente_account-settings.php" class="checkmark1"></a>
+        </label>
+        <label class="check_container1">Favorite Books
+            <input type="radio" name="order" value="book_author">
+            <a href="../cliente/cliente_account-favorites.php" class="checkmark1"></a>
+        </label>
+        <label class="check_container1">Books Viewed
+            <input type="radio" name="order" value="book_date" >
+            <a href="../cliente/cliente_account-viewed.php" class="checkmark1"></a>
+        </label>
+        <label class="check_container1">Collection
+            <input type="radio" name="order" value="book_price" checked="checked">
+            <a href="../cliente/cliente_account-collection.php" class="checkmark1"></a>
+        </label>
+        <label class="check_container1">Notifications
+            <input type="radio" name="order" value="book_publisher">
+            <a href="../cliente/cliente_account-settings.php" class="checkmark1"></a>
+        </label>
+
+
+        <label class="check_container" style="margin-top: 40px">Catalog
+            <input type="radio" name="radio">
+            <a href="../cliente/cliente_account-settings.php" class="checkmark"></a>
+        </label>
+        <div class="logout w-color">
+            <img  src="../assets/images/logout.png" alt="plus btn">
+            <a class="w-color" href="../geral/logout.php">Logout</a>
+        </div>
     </div>
 </div>
 <section class="main">
-    <div class="main_header">
+    <div class="row between-lg">
         <h1>Collection</h1>
+        <?php
+        include '../geral/header.php';
+        ?>
     </div>
     <?php
-    include '../geral/header.php';
+
     include '../geral/server-connection.php';
     ?>
     <div class="row">

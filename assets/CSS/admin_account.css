@@ -91,3 +91,28 @@ input:hover, textarea:hover {
     top: 0;
     opacity: 0;
 }
+.logout,.account {
+    margin-left: 20px;
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+.logout{
+    margin-top: 50px;
+}
+.logout img{
+    width: 34px;
+    height: 34px;
+    padding-right:20px;
+}
+.account{
+    margin-bottom: 40px;
+}
+.account img{
+    width: 32px;
+    height: 32px;    padding-right:20px;
+
+}
+.order{
+    margin-left: 60px;
+}

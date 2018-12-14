@@ -1,11 +1,11 @@
 .name {
-    position: fixed;
     color:black;
-    top: 0;
-    right: 0;
-    padding: 2em;
 }
 
 .header {
-    padding: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 20px;
 }

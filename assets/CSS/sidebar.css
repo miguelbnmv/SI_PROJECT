@@ -18,7 +18,7 @@
 }
 .sidebar_title {
     display: block;
-    margin: 0 0 1rem 1.5rem;
+    margin: 0 0 2rem 1.5rem;
     text-align: left;
     font-size: 1.5em;
 }
@@ -46,7 +46,7 @@ button:hover {
 .check_container {
     display: block;
     position: relative;
-    margin: 0 0 1.5em 1.5em;
+    margin: 0 0 1em 1.5em;
     cursor: pointer;
     font-size: 1em;
     -webkit-user-select: none;
@@ -56,9 +56,10 @@ button:hover {
     margin-top: 10px;
 }
 .check_container1 {
-    display: block;
+    display: flex;
+    flex-direction: column;
     position: relative;
-    margin: 0 0 1.5em 1.5em;
+    margin: 0 0 0.3em 0em;
     cursor: pointer;
     font-size: 0.8em;
     -webkit-user-select: none;
@@ -125,11 +126,11 @@ label {
     display: block;
 }
 .sidenav input[type=submit] {
-    width: 75%;
-    height: 3em;
+    width: 45%;
+    height: 2em;
     border: none;
     border-radius: 1em;
-    margin: 0 0 1.5rem 1.5rem;
+    margin: 0 0 1.5rem 5.5rem;
     background-color: #ffffff;
     color: #191919;
     box-shadow: .4em .4em 2.5em 0 rgba(0, 0, 0, 0.3);

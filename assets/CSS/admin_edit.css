@@ -11,28 +11,30 @@
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.25);
     padding: 20px 40px 20px 40px;
     margin: 20px;
-    padding-bottom:200px;
+    padding-bottom:70px;
 }
 .book-info{
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    background: #FFFFFF;
+    background: #F5F5F5;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
     border-radius: 22px;
     height: 40px;
     margin-left: 20px;
+    transition: background-color 1s ;
 }
 .book-info-files{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background: #FFFFFF;
+    background: #F5F5F5;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.12);
     border-radius: 22px;
     height: 40px;
+    transition: background-color 1s ;
 }
 .book_author,.book_fav{
     margin-left: 45px;
@@ -52,11 +54,17 @@
     margin-top: 20px;
 }
 
-input[type=submit] {
-    border: 0;
-    display: block;
-    height: 35px;
-    width: 35px;
+input[type=text]{
+    border: none;
+    font-size: 14px;
+    background-color: #F5F5F5;
+    transition: background-color 1s ;
+}
+input[type=text]:focus {
+    outline: none;
+}
+input[type=text]:hover , .book-info:hover{
+    background-color: white;
 }
 .images img{
     height: 35px;
@@ -67,4 +75,13 @@ input[type=submit] {
 }
 .upload-btn-wrapper iframe{
     width: 219px;
+}
+input[name="new"]{
+    height: 45px;
+    width: 155px;
+    border-radius: 100px;
+    border: none;
+    font-size: 16px;
+    background-color: white;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
 }

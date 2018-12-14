@@ -8,24 +8,26 @@
     <link rel="stylesheet" href="../assets/CSS/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/utilities.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/seeBook.css" type="text/css">
-    <link rel="stylesheet" href="../assets/CSS/catalog.css" type="text/css">
+    <link rel="stylesheet" href="../assets/CSS/header.css" type="text/css">
     <link rel="stylesheet" href="../assets/CSS/sidebar.css" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
 </head>
 <body>
 <section class="section section--white">
     <div class="container container-fluid">
-        <div class="row middle-xs ">
+        <div class="row between-lg ">
             <?php
             include '../geral/server-connection.php';
             $result = pg_query($connection, "select book_name from livro WHERE book_id = {$_GET['id']}");
             $result = pg_fetch_all($result);
             foreach ($result as $linha) {
                 echo "
-<a href='../admin/admin_catalog.php'>
- <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
- </a>
+                <div class='book_title'>
+                <a href='../admin/admin_catalog.php'>
+                    <img src='../assets/images/goback.png' style='width: 31.49px; height: 21.49px; margin-right: 20px'>
+                </a>
                   <h1>{$linha['book_name']}</h1>
+                  </div>
                 ";
             }
             ?>
@@ -76,25 +78,25 @@
                             </div>
                             <div class=\"row middle-xs m-top\">
                                 <p>Author</p>
-                                <div class=\"col-xs-9 book-info\">
+                                <div class=\"col-xs-9 book-info book_author\">
                                     <p>{$linha['book_author']}</p>
                                 </div>
                             </div>
                             <div class=\"row middle-xs m-top\">
-                                <p>Publishing <br> Company</p>
-                                <div class=\"col-xs-9  book-info\">
+                                <p>Publishing<br>Company</p>
+                                <div class=\"col-xs-9  book-info book_publisher\">
                                     <p>{$linha['book_publisher']}</p>
                                 </div>
                             </div>
                             <div class=\"row middle-xs m-top\">
                                 <p>Date</p>
-                                <div class=\"col-xs-9  book-info\">
+                                <div class=\"col-xs-9  book-info book_date\">
                                     <p>{$linha['book_date']}</p>
                                 </div>
                             </div>
                             <div class=\"row middle-xs m-top\">
                                 <p>Price</p>
-                                <div class=\"col-xs-9  book-info\">
+                                <div class=\"col-xs-9  book-info book_price\">
                                     <p>{$linha['book_price']} $</p>
                                 </div>
                             </div>
@@ -104,15 +106,21 @@
                                     <p>{$linha['book_description']}</p>
                                 </div>
                             </div>
-                        <div class=\"row middle-xs m-top\">
+                        <div class=\"row m-top\">
                         <div class=\"col-xs-3\">
                             <div class=\"upload-btn-wrapper\">
-    <img src='../assets/covers/{$linha['book_cover']}'/>
+                                 <img src='../assets/covers/{$linha['book_cover']}'/>
+                                 <div class=\"book-info-files\">
+                                    <p>Book Cover</p>
+                                </div>
                             </div>
                         </div>
                         <div class=\"col-xs-3\">
                             <div class=\"upload-btn-wrapper\">
                     <iframe src='../assets/texts/{$linha['book_text']}'> </iframe>
+                                       <div class=\"book-info-files\">
+                                    <p>Book File</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -141,7 +149,7 @@
                         $avg = $total / count($ratings);echo "
                         <div class='row middle-xs m-top'>
                         <p>Rating</p>
-                        <div class='col-xs-9 book-info'>
+                        <div class='col-xs-9 book-info book_rating'>
                             <p>$avg</p>
                         </div>
                     </div>
@@ -153,7 +161,7 @@
     
                     <div class='row middle-xs m-top'>
                         <p>Favorites</p>
-                        <div class='col-xs-9 book-info'>
+                        <div class='col-xs-9 book-info book_fav'>
                             <p>$favoritestotal</p>
 
                         </div>
@@ -161,9 +169,9 @@
                      $comments = pg_query($connection, "select * from comentarios where book_id={$_GET['id']}");
                     $commentstotal = pg_numrows($comments);
                     echo "
-                    <div class='row middle-xs m-top'>
+                    <div class='row middle-xs m-top' >
                         <p>Comments</p>
-                        <div class='col-xs-9 book-info'>
+                        <div class='col-xs-9 book-info book_comment '>
                             <p>$commentstotal </p>
        
                    <a class=\"b-color\" href='../admin/admin_comments.php?id=" . $_GET['id'] . "'> See More</a>";
