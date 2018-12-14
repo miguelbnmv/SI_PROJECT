@@ -109,14 +109,13 @@
           {
               echo "Sorry, but we can not find an entry to match your query<br><br>";
           }
-
       } else if(isset($_POST["submit_order"])) {
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro order by {$_POST["order"]}");
             $result = pg_fetch_all($result);
           echo "<div class='main-container'>";
             foreach ($result as $linha) {
                 $Book_comprado = pg_query($connection, "SELECT book_id FROM compra where book_id='{$linha['book_id']}'");
-                $Book_comprado_result = pg_numrows($Book_comprado);
+                $Book_comprado_result = pg_num_rows($Book_comprado);
                 if ($Book_comprado_result>0) {
                     echo "
                     <div class='book'>
@@ -146,17 +145,18 @@
                         </a>
                     </div> 
             ";
-
                 }
             }
         } else {
           echo "<div class='main-container'>";
             $result = pg_query($connection, "SELECT book_id, book_name, book_author, book_price, book_publisher, book_date, book_cover FROM livro");
             $result = pg_fetch_all($result);
+
             foreach ($result as $linha){
                 $Book_comprado = pg_query($connection, "SELECT book_id FROM compra  WHERE book_id = {$linha['book_id']}");
                 $Book_comprado_result = pg_num_rows($Book_comprado);
                 if ($Book_comprado_result >0) {
+
                     echo "
                     <div class='book'>
                              <div class='book_img'>
@@ -185,7 +185,6 @@
                         </a>
                     </div> 
             ";
-
                 }
             }
         }
